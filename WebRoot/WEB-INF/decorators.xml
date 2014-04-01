@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<decorators defaultdir="/WEB-INF/jsp/decorators">
+    <!-- 在excludes元素下指定的頁面將不會由SiteMesh來裝飾 -->
+    <excludes>
+    	<pattern>/images/*</pattern>
+		<pattern>/js/*</pattern>
+		<pattern>/css/*</pattern>
+    	<!-- 
+        <pattern>/exclude.jsp</pattern>
+        <pattern>/exclude/*</pattern>
+         -->
+    </excludes>
+
+	<!-- 創建一個名為main的裝飾器，該裝飾器頁面為main.jsp,
+	     用於裝飾pattern指定的URL的所有頁面-->
+    <decorator name="main" page="Base.jsp">
+        <pattern>/*</pattern>
+    </decorator>
+
+	<!-- 定義一個裝飾器,但該裝飾器預設不裝飾任何頁面 -->
+	<!-- 
+    <decorator name="panel" page="panel.jsp"/>
+     -->
+</decorators>

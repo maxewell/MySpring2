@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:aop="http://www.springframework.org/schema/aop"
+		xmlns:tx="http://www.springframework.org/schema/tx"
+		xsi:schemaLocation="
+			http://www.springframework.org/schema/beans 
+			http://www.springframework.org/schema/beans/spring-beans.xsd
+			http://www.springframework.org/schema/aop 
+			http://www.springframework.org/schema/aop/spring-aop.xsd
+			http://www.springframework.org/schema/tx 
+			http://www.springframework.org/schema/tx/spring-tx.xsd">
+	
+	<bean id="schedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+    </bean>
+	
+	<bean id="scheduleService" class="com.home.maxwell.service.impl.MockQuartzScheduleServiceImpl">
+		<property name="scheduler" ref="schedulerFactoryBean"/>
+		<!-- 
+		<property name="jobDetailMap">
+			<map>
+				<entry>
+					<key><value>MOCKX</value></key>
+					<ref bean="mockXJobDeatil" />
+				</entry>
+				<entry>
+					<key><value>MOCKY</value></key>
+					<ref bean="mockYJobDeatil" />
+				</entry>
+			</map>
+		</property>
+		 -->
+	</bean>
+    
+    <!-- 
+    <bean id="mockXJobDeatil" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject">
+            <ref bean="mockFacade"/>
+        </property>
+        <property name="targetMethod">
+            <value>someThing</value>
+        </property>
+    </bean>
+    
+    <bean id="mockYJobDeatil" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject">
+            <ref bean="mockFacade"/>
+        </property>
+        <property name="targetMethod">
+            <value>anotherThing</value>
+        </property>
+    </bean>
+     -->
+    
+</beans>		

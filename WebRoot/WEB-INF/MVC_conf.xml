@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!--
+		**************************** reslover *****************************
+	-->
+	<!-- localResolver -->
+	<bean id="localeResolver"
+		class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+		<property name="defaultLocale" value="zh_TW" />
+	</bean>
+
+	<bean id="localeChangeInterceptor"
+		class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+		<property name="paramName" value="language" />
+	</bean>
+
+
+	<bean
+		class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping">
+		<property name="caseSensitive" value="true" />
+		<property name="order" value="1" />
+		<property name="interceptors">
+			<list>
+				<ref bean="myInterceptor" />
+				<ref bean="localeChangeInterceptor" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.XmlViewResolver">
+		<property name="location" value="/WEB-INF/View_conf.xml" />
+	</bean>
+
+	<bean id="MethodResolver"
+		class="org.springframework.web.servlet.mvc.multiaction.InternalPathMethodNameResolver">
+		<property name="prefix" value="on" />
+		<!-- 
+		<property name="suffix" value="Customer" />
+		 -->
+	</bean>
+
+	<bean
+		class="org.springframework.web.context.support.ServletContextAttributeExporter">
+		<property name="attributes">
+			<map>
+				<entry key="environment" value-ref="envRuntime" />
+			</map>
+		</property>
+	</bean>
+
+	<!--
+		************************** BaseController
+		********************************
+	-->
+
+	<bean id="abstractSpringController" abstract="true">
+		<property name="methodNameResolver" ref="MethodResolver" />
+		<property name="synchronizeOnSession" value="true" />
+		<property name="cacheSeconds" value="0" />
+	</bean>
+
+	<!--
+		************************** App Controller
+		********************************
+	-->
+
+	<bean id="customerController" parent="abstractSpringController"
+		class="com.home.maxwell.controller.CustomerController">
+		<property name="person" ref="person" />
+		<property name="validators">
+			<list>
+				<!--
+					<bean class="com.home.maxwell.validator.PersonValidator" /> <bean
+					class="com.home.maxwell.validator.IdnValidator" /> <ref
+					bean="unoValidator"/> <ref bean="idnValidator"/>
+				-->
+			</list>
+		</property>
+	</bean>
+
+	<bean id="oweAppController" parent="abstractSpringController"
+		class="com.home.maxwell.controller.OweAppController">
+		<property name="oweFacade" ref="oweFacade" />
+		<property name="calYmView" value="calYmView" />
+		<property name="calInputView" value="calInputView" />
+		<property name="validators">
+			<list>
+			    <bean class="com.home.maxwell.validator.OweAppValidator" />
+				<ref bean="oweCalFormValidator"/>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="dbTxController" parent="abstractSpringController"
+		class="com.home.maxwell.controller.DbTxController">
+		<property name="dbTxFacade" ref="dbTxFacade" />
+	</bean>
+
+	<bean id="formDemoController" parent="abstractSpringController"
+		class="com.home.maxwell.controller.FormDemoController">
+		<property name="inputForm" value="inputForm" />
+		<property name="updateForm" value="updateForm" />
+	</bean>
+
+	<bean id="mockController" parent="abstractSpringController"
+		class="com.home.maxwell.controller.MockController">
+        <property name="mockFacade" ref="mockFacade" />
+		<property name="scheduleService" ref="scheduleService" />
+		<property name="asyncService" ref="asyncService" />
+		<property name="timerService" ref="timerService" />
+	</bean>
+
+	<bean parent="abstractSpringController" class="com.home.maxwell.controller.LocaleController">
+	</bean>
+
+	<bean class="com.home.maxwell.controller.WelcomeController" />
+
+	<bean parent="abstractSpringController" class="com.home.maxwell.controller.DbPropSwitchController">
+		<property name="person" ref="person" />
+	</bean>
+	
+	<bean parent="abstractSpringController" class="com.home.maxwell.controller.FtpController">
+        <property name="ftpService" ref="ftpService" />
+    </bean>
+    
+    <bean parent="abstractSpringController" class="com.home.maxwell.controller.MailController">
+        <property name="mailService" ref="mailService" />
+    </bean>
+    
+    <bean parent="abstractSpringController" class="com.home.maxwell.controller.ExceptionController" />
+</beans>    
+    

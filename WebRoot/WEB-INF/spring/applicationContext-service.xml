@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:aop="http://www.springframework.org/schema/aop"
+		xsi:schemaLocation="
+			http://www.springframework.org/schema/beans 
+			http://www.springframework.org/schema/beans/spring-beans.xsd
+			http://www.springframework.org/schema/aop 
+			http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!-- 
+	<bean id="ftpServer1" class="com.home.maxwell.service.FtpService">
+		<property name="env" ref="ftpServer1Env" />
+	</bean>
+			
+    <bean id="ftpServer2" class="com.home.maxwell.service.FtpService">
+		<property name="env" ref="ftpServer2Env" />
+	</bean>	
+	 -->
+	 
+	<bean id="systemService" class="com.home.maxwell.service.impl.SystemServiceImpl">
+	   <property name="appEnvDao" ref="appEnvDao"/>   
+	</bean>		
+	
+	<bean id="asyncService" class="com.home.maxwell.service.impl.AsyncServiceImpl" />
+	
+	<bean id="timerService" class="com.home.maxwell.service.impl.TimeTaskServiceImpl" /> 
+	
+	<bean id="ftpService" class="com.home.maxwell.service.impl.EdpFtpServiceImpl">
+	   <property name="ftpClient" ref="ftpClient" />
+	</bean>
+	
+	<bean id="ftpClient" class="com.enterprisedt.net.ftp.FileTransferClient" >
+	   <property name="remoteHost" value="${vsftp.host}"/>
+	   <property name="userName" value="${vsftp.username}"/>
+	   <property name="password" value="${vsftp.passwd}"/>
+	</bean>
+	
+	<bean id="mailService" class="com.home.maxwell.service.impl.SpringMailServiceImpl" >
+	   <property name="mailSender" ref="mailSender" />
+	</bean>		
+	
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+	    <property name="host" value="smtp.gmail.com" />
+        <property name="port" value="587" />
+        <property name="username" value="IndyMaxwell@gmail.com" />
+        <property name="password" value="areuao361" />
+ 
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.transport.protocol">smtp</prop>
+                <prop key="mail.smtp.auth">true</prop>
+                <prop key="mail.smtp.starttls.enable">true</prop>
+                <prop key="mail.debug">true</prop>
+            </props>
+        </property>
+	</bean>
+</beans>	

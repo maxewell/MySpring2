@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="AppEnv">
+    
+    <resultMap id="AppEnvMap" class="com.home.maxwell.domain.AppEnv"> 
+        <result property="appName" column="APPNAME" /> 
+        <result property="envKey" column="ENVKEY" /> 
+        <result property="envValue" column="ENVVALUE" /> 
+    </resultMap> 
+
+    <!-- 
+    <select id="getAppConfigValues" parameterClass="java.lang.String" resultMap="AppConfigMap">
+        SELECT 
+        APPNAME, 
+        `KEY`,  
+        `VALUE`
+        FROM APPCONFIG
+        WHERE
+            APPNAME = #value:varchar#
+    </select>
+     -->
+    <select id="getAppEnvValues" parameterClass="java.lang.String" resultClass="com.home.maxwell.domain.AppEnv">
+        SELECT 
+        APPNAME as appName, 
+        ENVKEY as envKey,  
+        ENVVALUE as envValue
+        FROM APPENV
+        WHERE
+            APPNAME = #value:varchar#
+    </select> 
+</sqlMap>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Emp">
+    
+    <resultMap id="EmpResult" class="com.home.maxwell.domain.Emp"> 
+        <result property="empId"    column="EMPID"  jdbcType="NUMBER"   javaType="java.lang.Integer" /> 
+        <result property="name"     column="NAME"   jdbcType="VARCHAR"  javaType="java.lang.String" /> 
+        <result property="deptId"   column="DEPT"   jdbcType="NUMBER"   javaType="java.lang.Integer" nullValue="0"/> 
+        <result property="salary"   column="SAL"    jdbcType="NUMBER"   javaType="java.lang.Float"/>
+    </resultMap> 
+    
+    <insert id="insertEmp">
+        insert into EMP (EMPID, NAME, SAL) values (#empId#, #name#, #salary#)
+    </insert>
+    
+    <update id="updateEmpSalary">
+    	UPDATE EMP 
+    	SET SAL = #salary#
+    	WHERE EMPID = #empId#
+    </update>
+    
+    <select id="queryEmpSalary" resultClass="java.lang.Float">
+    	SELECT SAL
+    	FROM EMP
+    	WHERE EMPID = #VALUE#
+    </select>
+    
+    <select id="getAllEmp" resultMap="EmpResult">
+        SELECT EMPID, NAME, DEPT, SAL 
+        FROM EMP
+    </select>
+    
+    <select id="queryEmp" resultClass="com.home.maxwell.domain.Emp">
+        SELECT EMPID, NAME, DEPT, SAL as SALARY
+        FROM EMP
+        WHERE 
+            EMPID = #value:varchar#
+    </select>
+</sqlMap>

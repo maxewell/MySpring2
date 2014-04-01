@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	        http://www.springframework.org/schema/beans/spring-beans.xsd
+			http://www.springframework.org/schema/aop 
+			http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<bean id="person" class="com.home.maxwell.domain.Person">
+		<property name="firstName" value="${first.name}" />
+		<property name="lastName" value="${last.name}" />
+		<property name="email" value="${email}" />
+		<property name="car" value="${car}" />
+		<!--
+			<property name="ftpService" ref="ftpServer1" />
+		-->
+	</bean>
+
+	<bean id="dbTxFacade" class="com.home.maxwell.model.impl.DbTxFacadeImpl">
+		<property name="deptDao" ref="deptDao" />
+		<property name="empDao" ref="empDao" />
+	</bean>
+
+    <bean id="mockFacade" class="com.home.maxwell.model.impl.MockFacadeImpl">
+    </bean>
+
+    <bean id="oweFacade" class="com.home.maxwell.model.impl.OweFacadeImpl">
+    </bean>
+</beans>			

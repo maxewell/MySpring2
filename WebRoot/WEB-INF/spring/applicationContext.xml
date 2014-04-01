@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:aop="http://www.springframework.org/schema/aop"
+		xmlns:tx="http://www.springframework.org/schema/tx"
+		xsi:schemaLocation="
+			http://www.springframework.org/schema/beans 
+			http://www.springframework.org/schema/beans/spring-beans.xsd
+			http://www.springframework.org/schema/aop 
+			http://www.springframework.org/schema/aop/spring-aop.xsd">
+	
+	<import resource="applicationContext-datasource.xml"/>
+	<import resource="applicationContext-runtime.xml"/>
+	<import resource="applicationContext-service.xml"/>
+	<import resource="applicationContext-schedule.xml"/>
+	<import resource="applicationContext-app1.xml"/>
+	<import resource="applicationContext-dao.xml"/>
+	<import resource="applicationContext-validator.xml"/>
+     
+    <!-- **************************** Message Resource ***************************** -->
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basenames">
+            <list>
+                <value>messages</value>
+                <value>welcome</value>
+                <value>screens</value>
+            </list>
+        </property>
+        <!-- for spring 3.x 
+        <property name="fallbackToSystemLocale" value="false" />
+         -->
+    </bean>     
+     
+    <!-- ########################## PropertyPlaceholderConfigurer ########################## -->
+    <!-- 
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>WEB-INF/spring/env.properties</value>
+            </list>
+        </property>
+        <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_FALLBACK" />
+        <property name="location" value="classpath:env.properties" />
+        <property name="properties" ref="commonsConfigurationFactoryBean" />
+        <property name="properties" ref="runtimeFactoryBean"/> 
+    </bean>
+    -->
+    
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <!-- 
+        <property name="locations">
+            <list>
+                <value>WEB-INF/spring/env.properties</value>
+            </list>
+        </property>
+         --> 
+        <property name="properties" ref="rtimeDbPropertiesFactoryBean"/>  
+    </bean>
+    
+    <bean id="rtimeDbPropertiesFactoryBean" class="com.home.maxwell.env.RtimeDbPropertiesFactoryBean" 
+             init-method="init" >
+        <property name="dataSource" ref="dataSource" />
+        <property name="appName" value="MySpring1" />
+    </bean>
+	
+    <!-- ########################## PropertyOverrideConfigurer ########################## -->
+    <bean class="org.springframework.beans.factory.config.PropertyOverrideConfigurer">
+        <property name="locations">
+            <list>
+                <value>WEB-INF/spring/override.properties</value>
+            </list>
+        </property>
+        <!-- 
+        <property name="location" value="classpath:env.properties" />
+         -->
+    </bean>
+    
+    <!-- ************************** Filter ******************************** -->
+    <bean id="myInterceptor" class="com.home.maxwell.interceptor.MyInterceptor">
+    </bean>
+    
+    <!-- ########################## EJ Logging ########################### --> 
+    <bean id="ejLogFilter" class="com.home.maxwell.filter.HttpEJLoggingFilter">
+        <property name="ejLogService">
+            <bean class="com.home.maxwell.service.impl.EJLogServiceLog4JImpl" />
+        </property>
+        <!-- -->
+        <property name="reqNotFilterSuffixs">
+            <set>
+                <value>.do</value>
+                <value>.so</value>
+                <value>.jsp</value>
+                <value>.htm</value>
+                <value>.html</value>
+            </set>
+        </property>
+    </bean>
+    
+    <bean id="mbeanServer" class="org.springframework.jmx.support.MBeanServerFactoryBean" />
+       
+    <bean class="com.home.maxwell.utils.ApplicationContextUtils" />
+       
+    <!--  
+    <bean id="commonsConfigurationFactoryBean" class="org.springmodules.commons.configuration.CommonsConfigurationFactoryBean">
+        <constructor-arg ref="databaseConfiguration"/>
+    </bean>
+    <bean id="databaseConfiguration" class="org.apache.commons.configuration.DatabaseConfiguration">
+        <constructor-arg index="0" type="javax.sql.DataSource" ref="dataSource"/>
+        <constructor-arg index="1" value="configuration"/>
+        <constructor-arg index="2" value="application"/>
+        <constructor-arg index="3" value="key"/>
+        <constructor-arg index="4" value="value"/>
+        <constructor-arg index="5" value="ApplicationOne" />
+    </bean> 
+     -->
+</beans>	

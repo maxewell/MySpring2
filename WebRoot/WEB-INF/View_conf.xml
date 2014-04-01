@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+    http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+        
+    <bean id="CustomerPage" class="org.springframework.web.servlet.view.InternalResourceView">
+        <property name="url" value="/WEB-INF/jsp/CustomerPage.jsp"/>
+    </bean>   
+    
+    <!-- 
+    <bean id="LaPtxTaUpdateRecvMrkNull" class="tw.gov.bli.bj.xmlview.lasuite.LaPtxTaUpdateRecvmrkView"/>
+     -->
+    
+    <bean id="calYmView"  class="org.springframework.web.servlet.view.InternalResourceView">
+        <property name="url" value="/WEB-INF/jsp/oweapp/meca10w010.jsp" />
+    </bean>      
+    <bean id="calInputView"  class="org.springframework.web.servlet.view.InternalResourceView">
+        <property name="url" value="/WEB-INF/jsp/oweapp/meca10w011.jsp" />
+    </bean>
+    
+    <bean id="inputForm" class="org.springframework.web.servlet.view.InternalResourceView">
+        <property name="url" value="/WEB-INF/jsp/myform/showform.jsp" />
+    </bean>
+    <bean id="updateForm" class="org.springframework.web.servlet.view.InternalResourceView">
+        <property name="url" value="/WEB-INF/jsp/myform/updateform.jsp" />
+    </bean>   
+    <bean id="dbTxInput" class="org.springframework.web.servlet.view.InternalResourceView">
+        <property name="url" value="/WEB-INF/jsp/baseform/inputform.jsp" />
+    </bean>
+    
+    <bean id="dbTxList" class="org.springframework.web.servlet.view.InternalResourceView">
+        <property name="url" value="/WEB-INF/jsp/baseform/listform.jsp" />
+    </bean> 
+    
+    <bean id="dbTxQuery" class="org.springframework.web.servlet.view.InternalResourceView">
+        <property name="url" value="/WEB-INF/jsp/baseform/empform.jsp"/>
+    </bean> 
+    
+    <bean id="welcome" class="org.springframework.web.servlet.view.InternalResourceView">
+        <property name="url" value="/index.jsp" />
+    </bean>        
+    
+    <bean id="LocalePage" class="org.springframework.web.servlet.view.InternalResourceView">
+        <property name="url" value="/WEB-INF/jsp/LocalePage.jsp" />
+    </bean> 
+    
+    <bean id="WelcomePage" class="org.springframework.web.servlet.view.InternalResourceView">
+        <property name="url" value="/WEB-INF/jsp/LocalePage.jsp" />
+    </bean>  
+    
+    <bean id="dbProperty" class="org.springframework.web.servlet.view.InternalResourceView">
+        <property name="url" value="/WEB-INF/jsp/DbProperty.jsp" />
+    </bean> 
+    
+    <bean id="ftpForm" class="org.springframework.web.servlet.view.InternalResourceView">
+        <property name="url" value="/WEB-INF/jsp/FtpForm.jsp" />
+    </bean>   
+    
+    <bean id="mailForm" class="org.springframework.web.servlet.view.InternalResourceView">
+        <property name="url" value="/WEB-INF/jsp/MailForm.jsp" />
+    </bean>   
+    
+    <bean id="ExceptionDemo" class="org.springframework.web.servlet.view.InternalResourceView">
+        <property name="url" value="/WEB-INF/jsp/ExceptionDemo.jsp" />
+    </bean>   
+</beans>
