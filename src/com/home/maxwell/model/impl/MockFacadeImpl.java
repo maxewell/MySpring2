@@ -1,9 +1,13 @@
 package com.home.maxwell.model.impl;
 
 
+
+import java.io.InputStream;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.home.maxwell.helper.ThreadLocalHelper;
 import com.home.maxwell.model.MockFacade;
 
 public class MockFacadeImpl implements MockFacade{
@@ -14,6 +18,7 @@ public class MockFacadeImpl implements MockFacade{
 		if (logger.isInfoEnabled()){
 			logger.info("MockFacadeImple: doMockSomething: " + data + "||" + Thread.currentThread().getName());
 		}	
+		InputStream is = ThreadLocalHelper.getResourceAsStream("WEB-INF/web.xml");
 	}
 
 	public void doMockNothing(String data) {

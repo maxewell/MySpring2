@@ -19,6 +19,7 @@ import com.home.maxwell.exception.ApctlException;
 public class ApctlController extends MultiActionController{
 	protected static final String PREV_VIEW_NAME_ATTR = "___PRE__VIEW";
 	protected static final String REQUEST_OBJ_ATTR = "___REQUEST__OBJ";
+	protected static final String ENV_RUNTIME_ATTR ="___ENV__RUNTIME";
 	
 	
 	protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response)throws Exception{
@@ -48,7 +49,6 @@ public class ApctlController extends MultiActionController{
 			//TODO: 
 		}
 		
-			
 		//清除ThreadLocal中Http等Session資料
 		releaseThreadLocalTxData();
 		
@@ -77,9 +77,13 @@ public class ApctlController extends MultiActionController{
 
 	//將Http等Session訊息丟入ThreadLocal中，以供Model由ThreadLocal取得Http等Session，不會跟Http Adapter起耦合
 	protected void buildThreadLocalTxData(HttpServletRequest request) {
+		//從ServletContext取得environment
+		Object obj = request.getSession().getServletContext().getAttribute(ENV_RUNTIME_ATTR);
 		ThreadLocal threadlocal = new ThreadLocal();
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put(REQUEST_OBJ_ATTR, request);
+		//將environment放入ThreadLocal
+		map.put(ENV_RUNTIME_ATTR, obj);
 		
 		threadlocal.set(map);	
 	}

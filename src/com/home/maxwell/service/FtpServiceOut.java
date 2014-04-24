@@ -2,7 +2,7 @@ package com.home.maxwell.service;
 
 import org.apache.log4j.Logger;
 
-import com.home.maxwell.env.Environment;
+import com.home.maxwell.env.EnvirContext;
 import com.home.maxwell.env.FtpRuntime;
 
 public class FtpServiceOut {

@@ -8,7 +8,7 @@
 			http://www.springframework.org/schema/aop 
 			http://www.springframework.org/schema/aop/spring-aop.xsd">
 
-    <bean id="envRuntime" class="com.home.maxwell.env.Environment">
+    <bean id="envRuntime" class="com.home.maxwell.env.EnvirContext">
 		<property name="envType" ref="runtimeEnvType" />
 	</bean>
 	
