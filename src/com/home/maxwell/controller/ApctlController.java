@@ -18,17 +18,19 @@ import com.home.maxwell.exception.ApctlException;
 
 public class ApctlController extends MultiActionController{
 	protected static final String PREV_VIEW_NAME_ATTR = "___PRE__VIEW";
-	protected static final String REQUEST_OBJ_ATTR = "___REQUEST__OBJ";
-	protected static final String ENV_RUNTIME_ATTR ="___ENV__RUNTIME";
+	//protected static final String REQUEST_OBJ_ATTR = "___REQUEST__OBJ";
+	//protected static final String ENV_RUNTIME_ATTR ="___ENV__RUNTIME";
 	
 	
 	protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response)throws Exception{
 		
 		//將Http等Session訊息丟入ThreadLocal中，以供Model(非Controller)由ThreadLocal取得Http等Session，不會跟Http Adapter起耦合
-		buildThreadLocalTxData(request);
+		//buildThreadLocalTxData(request);
 		
 		ModelAndView mv = null;
 		
+		//所有Ap中,若有異常，無法執行下去，就Throw出來，apctl來處理
+		//處理動作，回到前一頁，顯示錯誤訊息
 		try {
 			mv = super.handleRequestInternal(request, response);
 			
@@ -50,7 +52,7 @@ public class ApctlController extends MultiActionController{
 		}
 		
 		//清除ThreadLocal中Http等Session資料
-		releaseThreadLocalTxData();
+		//releaseThreadLocalTxData();
 		
 		HttpSession session = request.getSession(false);
 		if (mv != null){
@@ -63,6 +65,7 @@ public class ApctlController extends MultiActionController{
 		return mv;
 	}
 	
+	/*
 	//清除ThreadLocal中Http等Session資料
 	protected void releaseThreadLocalTxData() {
 		ThreadLocal threadlocal = new ThreadLocal();
@@ -87,7 +90,8 @@ public class ApctlController extends MultiActionController{
 		
 		threadlocal.set(map);	
 	}
-
+	*/
+	
 	//當control處理有問題時，可呼叫此function處理
 	public ModelAndView throwResponse(HttpServletRequest request, String viewName, String commandName, Object domain){
 		BindException bex = new BindException(domain, commandName);

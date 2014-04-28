@@ -76,7 +76,7 @@
     </bean>
     
     <!-- ************************** Filter ******************************** -->
-    <bean id="myInterceptor" class="com.home.maxwell.interceptor.MyInterceptor">
+    <bean id="apctlInterceptor" class="com.home.maxwell.interceptor.ApctlInterceptor">
     </bean>
     
     <!-- ########################## EJ Logging ########################### --> 
@@ -98,8 +98,10 @@
     
     <bean id="mbeanServer" class="org.springframework.jmx.support.MBeanServerFactoryBean" />
        
+
+    <!--  Deprecated  
     <bean class="com.home.maxwell.utils.ApplicationContextUtils" />
-       
+    -->    
     <!--  
     <bean id="commonsConfigurationFactoryBean" class="org.springmodules.commons.configuration.CommonsConfigurationFactoryBean">
         <constructor-arg ref="databaseConfiguration"/>

@@ -26,7 +26,7 @@
 		<property name="order" value="1" />
 		<property name="interceptors">
 			<list>
-				<ref bean="myInterceptor" />
+				<ref bean="apctlInterceptor" />
 				<ref bean="localeChangeInterceptor" />
 			</list>
 		</property>
@@ -53,10 +53,7 @@
 		</property>
 	</bean>
 
-	<!--
-		************************** BaseController
-		********************************
-	-->
+	<!--  ********************* BaseController	******************************** -->
 
 	<bean id="abstractSpringController" abstract="true">
 		<property name="methodNameResolver" ref="MethodResolver" />
@@ -64,10 +61,7 @@
 		<property name="cacheSeconds" value="0" />
 	</bean>
 
-	<!--
-		************************** App Controller
-		********************************
-	-->
+	<!-- ************************** App Controller ********************************	-->
 
 	<bean id="customerController" parent="abstractSpringController"
 		class="com.home.maxwell.controller.CustomerController">
