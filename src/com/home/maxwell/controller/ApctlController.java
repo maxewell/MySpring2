@@ -93,6 +93,7 @@ public class ApctlController extends MultiActionController{
 	*/
 	
 	//當control處理有問題時，可呼叫此function處理
+	/*
 	public ModelAndView throwResponse(HttpServletRequest request, String viewName, String commandName, Object domain){
 		BindException bex = new BindException(domain, commandName);
 		ObjectError err = new ObjectError(commandName, new String[]{"internalError.ErrorMsg"}, null, "Default Error Message");
@@ -105,7 +106,7 @@ public class ApctlController extends MultiActionController{
 		
 		return new ModelAndView(viewName, bex.getModel());
 	}
-	
+	*/
 	
 	public ModelAndView handleBindException(HttpServletRequest request, HttpServletResponse response, ServletRequestBindingException reqbindingException) {
 		BindException be1 = (BindException)reqbindingException.getRootCause();
