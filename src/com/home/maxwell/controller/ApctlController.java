@@ -21,7 +21,6 @@ public class ApctlController extends MultiActionController{
 	//protected static final String REQUEST_OBJ_ATTR = "___REQUEST__OBJ";
 	//protected static final String ENV_RUNTIME_ATTR ="___ENV__RUNTIME";
 	
-	
 	protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response)throws Exception{
 		
 		//將Http等Session訊息丟入ThreadLocal中，以供Model(非Controller)由ThreadLocal取得Http等Session，不會跟Http Adapter起耦合
@@ -122,4 +121,6 @@ public class ApctlController extends MultiActionController{
 		return new ModelAndView(viewname, model);
 		
 	}	
+	
+	//why not show in 
 }
