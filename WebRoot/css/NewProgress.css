@@ -1,0 +1,24 @@
+        .MyProgress {
+            background-color:#ADD7EE;
+            z-index:1000;
+            position: absolute;
+            top: 35%;
+            left: 35%;
+            height: 11em;  /*使用em,不能使用%*/
+            width: 29%;
+            padding: 0 0 0 0;
+            color:red;
+            border: 2px dashed blue;
+        }
+        #progress {
+            margin: 5% 2em 0 2em; 
+            padding: 2px; 
+            border: solid black 2px;
+            -webkit-border-radius: 35px;
+        }
+        #progmsg {
+            margin: 3em 0 0 0; 
+            padding: 0;
+            text-align: center;
+            
+        }   
