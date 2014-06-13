@@ -22,4 +22,9 @@ public class ThreadLocalHelper {
 	public static Set getResourcePaths(String name){
 		return null;
 	}
+	
+	public static Object getBean(String name){
+		//TODO: 
+		return null;
+	}
 }
