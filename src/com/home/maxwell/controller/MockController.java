@@ -41,7 +41,7 @@ public class MockController  extends ApctlController{
 		mockFacade.doMockSomething(empid);
 		
 		//if async
-		asyncService.asyncRun(new Runnable(){
+		asyncService.asyncRun("xx", new Runnable(){
 			public void run(){
 				mockFacade.doMockSomething(empid);
 			}
@@ -66,7 +66,7 @@ public class MockController  extends ApctlController{
 			HttpServletResponse response) throws Exception {
 		System.out.println(Thread.currentThread().getName());
 		final int data = 100; 
-		asyncService.asyncRun(new Runnable(){
+		asyncService.asyncRun("xx", new Runnable(){
 			public void run() {
 				//System.out.println("T:" + Thread.currentThread().getName());
 				mockFacade.doMockSomething(data);

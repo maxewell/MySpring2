@@ -4,15 +4,19 @@ import java.util.Date;
 import java.util.Map;
 
 
+import com.home.maxwell.service.AsyncStatus;
 import com.home.maxwell.service.ITxRunnable;
 
 public abstract class AbstractRunnableImpl implements ITxRunnable{
 	protected int priority;
-	
+	protected String name;
+	protected AsyncStatus status;
+
 	protected Map<String, Object> dataMap;
 
 	protected Date deQTime;
 	protected Date enQTime;
+	
 	
 	public int compareTo(Object o) {
 		AbstractRunnableImpl ano = (AbstractRunnableImpl)o;
@@ -24,13 +28,11 @@ public abstract class AbstractRunnableImpl implements ITxRunnable{
 	}
 
 	public void setDeQTime(Date date) {
-		// TODO Auto-generated method stub
-		
+		this.deQTime = date;
 	}
 
 	public void setEnQTime(Date date) {
-		// TODO Auto-generated method stub
-		
+		this.enQTime = date;
 	}
 	
 	public int getPriority() {
@@ -40,5 +42,20 @@ public abstract class AbstractRunnableImpl implements ITxRunnable{
 	public void setPriority(int priority) {
 		this.priority = priority;
 	}
+	
+	public String getName() {
+		return name;
+	}
 
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public AsyncStatus getAsyncStatus() {
+		return this.status;
+	}
+
+	public void setAsyncStatus(AsyncStatus status){
+		this.status = status;
+	}
 }
