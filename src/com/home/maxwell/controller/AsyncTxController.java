@@ -18,7 +18,7 @@ import com.home.maxwell.helper.ThreadLocalHelper;
 import com.home.maxwell.model.MockFacade;
 import com.home.maxwell.service.AsyncService;
 import com.home.maxwell.service.AsyncStatus;
-import com.home.maxwell.service.ITxRunnable;
+import com.home.maxwell.service.ITxCallable;
 
 public class AsyncTxController extends ApctlController{
 	protected String name;
@@ -31,13 +31,15 @@ public class AsyncTxController extends ApctlController{
 		
 		Runnable r = new Runnable(){
 			public void run(){
-				try {
+				//try {
+					//Exception 還是要Throw出來，由asyncService那邊去catch,
+				    //可以?
 					mockFacade.doMockNothing(data);
-				}catch(Exception e){
-					
-				}finally{
-					
+				/*
+				}catch(Exception e){					
+				}finally{					
 				}
+				*/
 			};
 		};
 		
@@ -69,7 +71,7 @@ public class AsyncTxController extends ApctlController{
 		//FtpRunnableImpl裡面內有EdtpFtpServiceImpl(singleton)
 		//但FtpRunnableImpl不能是Singleton
 		//所以用Spring getBean()
-		ITxRunnable r = (ITxRunnable)ThreadLocalHelper.getBean("XXXX");
+		ITxCallable r = (ITxCallable)ThreadLocalHelper.getBean("XXXX");
 		r.setRunData(map);
 		
 		AsyncStatus status = null;
@@ -85,7 +87,7 @@ public class AsyncTxController extends ApctlController{
 	 */
 	public ModelAndView queryTxProgress(HttpServletRequest request, HttpServletResponse response, HttpSession session){
 		AsyncStatus status = (AsyncStatus)session.getAttribute("XXXX");
-		//ITxRunnable內有status reference,會直接更新status的值
+		//ITxRunnable內有status reference,會直接更新status的值,不需再去作其他動作
 		
 		return null;
 	}
@@ -95,6 +97,7 @@ public class AsyncTxController extends ApctlController{
 	 * UserInfo: 識別某一人的資訊
 	 */
 	public ModelAndView queryAsyncTxStatusList(HttpServletRequest request, HttpServletResponse response, HttpSession session, UserInfo user){
+		//使用user與此交易名去查詢此user執行此交易過的歷史記錄
 		List<AsyncStatus> list = asyncService.queryAsyncTxStatusList(user, name);
 		return null;
 	}

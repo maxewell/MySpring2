@@ -3,7 +3,7 @@ package com.home.maxwell.service.impl.async;
 import java.util.PriorityQueue;
 
 public class BlockPriorityQueue<T> {
-	protected PriorityQueue<T> queue = new PriorityQueue<T>(5);
+	protected PriorityQueue<T> queue = new PriorityQueue<T>(10);
 	
 	public BlockPriorityQueue(int no){
 		queue = new PriorityQueue<T>(no);

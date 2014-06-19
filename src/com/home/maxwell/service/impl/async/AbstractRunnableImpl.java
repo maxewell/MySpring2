@@ -5,9 +5,9 @@ import java.util.Map;
 
 
 import com.home.maxwell.service.AsyncStatus;
-import com.home.maxwell.service.ITxRunnable;
+import com.home.maxwell.service.ITxCallable;
 
-public abstract class AbstractRunnableImpl implements ITxRunnable{
+public abstract class AbstractRunnableImpl implements ITxCallable{
 	protected int priority;
 	protected String name;
 	protected AsyncStatus status;
@@ -17,6 +17,9 @@ public abstract class AbstractRunnableImpl implements ITxRunnable{
 	protected Date deQTime;
 	protected Date enQTime;
 	
+	protected void updateTxAsyncStatus(String state){
+		
+	}
 	
 	public int compareTo(Object o) {
 		AbstractRunnableImpl ano = (AbstractRunnableImpl)o;
