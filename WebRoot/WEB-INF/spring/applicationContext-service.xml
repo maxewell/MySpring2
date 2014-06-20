@@ -32,8 +32,8 @@
 	
 	<bean id="timerService" class="com.home.maxwell.service.impl.TimeTaskServiceImpl" /> 
 	
-	<bean id="asyncFtpService" scope="singleton" class="com.home.maxwell.service.impl.async.EdpFtpRunnableImpl">
-	   <property name="ftpClient" ref="ftpClient" />
+	<bean id="asyncFtpService" scope="prototype" class="com.home.maxwell.service.impl.async.EdpFtpRunnableImpl">
+	   <property name="ftpService" ref="ftpService" />
 	</bean>
 	
 	<bean id="ftpService" class="com.home.maxwell.service.impl.EdpFtpServiceImpl">
