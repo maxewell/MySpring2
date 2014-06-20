@@ -7,5 +7,7 @@ public interface AsyncStatus {
 	public void setTxId(String txId);
 	public void setName(String name);
 	public boolean isDone();
-	public int getResult() throws InterruptedException, ExecutionException;
+	public int getResult(long timeout) throws Exception;
+	public int getResult() throws Exception;
+	public int waitResult() throws Exception;
 }

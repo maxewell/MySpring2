@@ -113,4 +113,13 @@ public class ConstantKey {
 	/*********************** AP ****************************/
 	public static final String ATTR_SESSION_USER_MENU = "___USER__MENU";
     	
+	
+	/* ********************** EdpFtpRunnableImpl- ********************* */
+	public static String FTP_RUN_METHOD_GET = "get";
+	public static String FTP_RUN_METHOD_PUT = "put";
+	public static String FTP_RUN_METHOD = "method";
+	public static String FTP_LOCAL_FILE = "localFile";
+	public static String FTP_REMOTE_DIR = "remoteDir";
+	public static String FTP_REMOTE_FILE = "remoteFile";
+	public static String FTP_TYPE_IS_ASCII = "ftpFileTypeIsAscii";
 }

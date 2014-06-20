@@ -62,7 +62,11 @@
 	</bean>
 
 	<!-- ************************** App Controller ********************************	-->
-
+    <bean id="asyncTxController" parent="abstractSpringController" class="com.home.maxwell.controller.AsyncTxController">
+        <property name="name" value="ASYNCRUN1" />
+        <property name="asyncService" ref="asyncService" />
+        <property name="mockFacade" ref="mockFacade" />
+    </bean>
 	<bean id="customerController" parent="abstractSpringController"
 		class="com.home.maxwell.controller.CustomerController">
 		<property name="person" ref="person" />

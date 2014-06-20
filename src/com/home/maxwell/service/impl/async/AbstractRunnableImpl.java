@@ -3,11 +3,16 @@ package com.home.maxwell.service.impl.async;
 import java.util.Date;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+
+import com.home.maxwell.exception.FtpServiceException;
 import com.home.maxwell.service.AsyncStatus;
 import com.home.maxwell.service.ITxCallable;
 
 public abstract class AbstractRunnableImpl implements ITxCallable{
+	protected static Logger logger = LoggerFactory.getLogger(AbstractRunnableImpl.class);
 	protected int priority;
 	protected String name;
 	protected AsyncStatus status;
@@ -17,8 +22,27 @@ public abstract class AbstractRunnableImpl implements ITxCallable{
 	protected Date deQTime;
 	protected Date enQTime;
 	
-	protected void updateTxAsyncStatus(String state){
+	public Boolean call(){
+		try {
+			this.updateTxAsyncStatus("Running");
+			doAsync();
+			this.updateTxAsyncStatus("True");
+		}catch(Throwable e){
+			//TODO: LOG Exception
 		
+			this.updateTxAsyncStatus("False");
+			return Boolean.FALSE;
+		}
+		
+		return Boolean.TRUE;
+	}
+	
+	public abstract void doAsync() throws Throwable;
+
+	protected void updateTxAsyncStatus(String state){
+		if (logger.isInfoEnabled()){
+			logger.info("Update Async state: " + state);
+		}
 	}
 	
 	public int compareTo(Object o) {

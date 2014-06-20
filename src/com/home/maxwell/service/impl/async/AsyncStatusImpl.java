@@ -2,6 +2,8 @@ package com.home.maxwell.service.impl.async;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import com.home.maxwell.service.AsyncStatus;
 
@@ -35,7 +37,23 @@ public class AsyncStatusImpl implements AsyncStatus{
 		return rs;
 	}
 	
-	public int getResult() throws InterruptedException, ExecutionException{
+	public int getResult(long timeout) throws InterruptedException, ExecutionException{
+		Boolean rs = null;
+		try {
+			rs = this.future.get(timeout, TimeUnit.MILLISECONDS);
+		}catch (TimeoutException e){
+			return 0;
+		}
+		
+		if (rs == Boolean.TRUE){
+			return 1;
+		}else{
+			return -1;
+		}
+		
+	}
+
+	public int getResult() throws Exception {
 		if (!isDone()){
 			return 0;
 		}else if (this.future.get() == Boolean.TRUE){
@@ -43,6 +61,14 @@ public class AsyncStatusImpl implements AsyncStatus{
 		}else {
 			return -1;
 		}
-				
+	}
+
+	public int waitResult() throws Exception {
+		if (this.future.get() == Boolean.TRUE){
+			return 1;
+		}else {
+			return -1;
+		}
+		
 	}
 }

@@ -17,14 +17,21 @@ public class MockFacadeImpl implements MockFacade{
 	public void doMockSomething(int data) {
 		if (logger.isInfoEnabled()){
 			logger.info("MockFacadeImple: doMockSomething: " + data + "||" + Thread.currentThread().getName());
-		}	
-		InputStream is = ThreadLocalHelper.getResourceAsStream("WEB-INF/web.xml");
+		}
+		
+		//InputStream is = ThreadLocalHelper.getResourceAsStream("WEB-INF/web.xml");
 	}
 
 	public void doMockNothing(String data) {
 		if (logger.isInfoEnabled()){
 			logger.info("MockFacadeImple: doMockNothing: " + data + "||" + Thread.currentThread().getName());
 		}	
+		
+		//simulate throw exception
+		/*
+		int a=1, b=0;
+		a = 100 / b;
+		*/
 	}
 
 }

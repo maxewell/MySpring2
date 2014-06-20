@@ -82,6 +82,9 @@
     <h2>Mail Service<a href="<c:url value='mail/MailForm.so' />" >Go TO Mail form</a></h2>
     <hr/>
     <a href="<c:url value='formDemo/Show.so' />" >FormDemo</a><br/>
-    <a href="<c:url value='exception/Show.so' />" >Exception</a>
+    <a href="<c:url value='exception/Show.so' />" >Exception</a><br/>
+    <a href="<c:url value='asyncTx/RunAsyncTx.so?data=Taipei' />" >Async Action1</a>
+    <a href="<c:url value='asyncTx/QueryTxProgress.so' />" >Async Action1 Future Query</a>
+    <a href="<c:url value='asyncTx/RunAsyncTxService.so' />" >Async Action Service</a> 
   </body>
 </html>

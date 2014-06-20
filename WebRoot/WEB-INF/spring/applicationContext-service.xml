@@ -22,9 +22,19 @@
 	   <property name="appEnvDao" ref="appEnvDao"/>   
 	</bean>		
 	
-	<bean id="asyncService" class="com.home.maxwell.service.impl.AsyncServiceImpl" />
+	<bean id="asyncService" class="com.home.maxwell.service.impl.async.AsyncServiceImpl" init-method="start">
+	   <property name="bpQueue" ref="blockPriorityQueue" />
+	</bean>
+	
+	<bean id="blockPriorityQueue" class="com.home.maxwell.service.impl.async.BlockPriorityQueue">
+	   <constructor-arg type="int" value="10" />
+	</bean>
 	
 	<bean id="timerService" class="com.home.maxwell.service.impl.TimeTaskServiceImpl" /> 
+	
+	<bean id="asyncFtpService" scope="singleton" class="com.home.maxwell.service.impl.async.EdpFtpRunnableImpl">
+	   <property name="ftpClient" ref="ftpClient" />
+	</bean>
 	
 	<bean id="ftpService" class="com.home.maxwell.service.impl.EdpFtpServiceImpl">
 	   <property name="ftpClient" ref="ftpClient" />

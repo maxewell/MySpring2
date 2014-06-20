@@ -28,6 +28,10 @@ public class AsyncServiceImpl extends Thread implements AsyncService{
 	
 	public AsyncStatus asyncRun(String name, final Runnable r) {
 		ITxCallable able = new AbstractRunnableImpl(){
+			public void doAsync(){
+				r.run();
+			}
+			/*
 			public Boolean call(){
 				try {
 					this.updateTxAsyncStatus("Running");
@@ -42,6 +46,7 @@ public class AsyncServiceImpl extends Thread implements AsyncService{
 				
 				return Boolean.TRUE;
 			}
+			*/
 		};
 		able.setName(name);
 		
@@ -112,4 +117,11 @@ public class AsyncServiceImpl extends Thread implements AsyncService{
 		return null;
 	}
 	
+	public BlockPriorityQueue<Callable<Boolean>> getBpQueue() {
+		return bpQueue;
+	}
+
+	public void setBpQueue(BlockPriorityQueue<Callable<Boolean>> bpQueue) {
+		this.bpQueue = bpQueue;
+	}
 }
