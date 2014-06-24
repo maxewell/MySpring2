@@ -11,6 +11,7 @@ public class AsyncStatusImpl implements AsyncStatus{
 	protected String txId;
 	protected String name;
 	protected Future<Boolean> future;
+	protected int progress;
 
 	public void setTxId(String txId) {
 		this.txId = txId;
@@ -70,5 +71,14 @@ public class AsyncStatusImpl implements AsyncStatus{
 			return -1;
 		}
 		
+	}
+	
+
+	public int getProgress() {
+		return progress;
+	}
+
+	public void setProgress(int progress) {
+		this.progress = progress;
 	}
 }

@@ -10,4 +10,6 @@ public interface AsyncStatus {
 	public int getResult(long timeout) throws Exception;
 	public int getResult() throws Exception;
 	public int waitResult() throws Exception;
+	public void setProgress(int val);
+	public int getProgress();
 }

@@ -68,10 +68,10 @@ public class AsyncTxController extends ApctlController{
 	}
 	
 	//使用已寫好的Runnable
-	public ModelAndView onRunAsyncTxService(HttpServletRequest request, HttpServletResponse response, HttpSession session, FtpJob ftpJob) throws ServletRequestBindingException{
+	public ModelAndView onRunAsyncTxService(HttpServletRequest request, HttpServletResponse response, HttpSession session, FtpJob job) throws ServletRequestBindingException{
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put(ConstantKey.FTP_LOCAL_FILE, "MyFtp.zip");
-		map.put(ConstantKey.FTP_REMOTE_FILE, "FtpTest.zip");
+		map.put(ConstantKey.FTP_LOCAL_FILE, "F:/MyDownloads.rar");
+		map.put(ConstantKey.FTP_REMOTE_FILE, "downloads.rar");
 		map.put(ConstantKey.FTP_RUN_METHOD, "get");
 		map.put(ConstantKey.FTP_TYPE_IS_ASCII, Boolean.FALSE);
 		
@@ -90,15 +90,16 @@ public class AsyncTxController extends ApctlController{
 		//FtpRunnableImpl裡面內有EdtpFtpServiceImpl(singleton)
 		//但FtpRunnableImpl不能是Singleton
 		//所以用Spring getBean()
-		//ITxCallable r = (ITxCallable)ThreadLocalHelper.getBean("asyncFtpService");
-		WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(request.getSession().getServletContext());
-		ITxCallable r = (ITxCallable)ctx.getBean("asyncFtpService");
+		ITxCallable r = (ITxCallable)ThreadLocalHelper.getBean("asyncFtpService");
+		
+		//WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(request.getSession().getServletContext());
+		//ITxCallable r = (ITxCallable)ctx.getBean("asyncFtpService");
+		
 		r.setRunData(map);
 		
 		AsyncStatus status = null;
 		status = asyncService.asyncRun(name, r);
 		session.setAttribute("___ASYNC__SERVICE_STATUS", status);
-
 				
 		return null;
 	}

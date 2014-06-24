@@ -10,10 +10,10 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.web.context.WebApplicationContext;
 
-public class EnvirContext implements ApplicationContextAware{
+public class EnvirContext {
 	
 	protected EnvironType envType = EnvironType.ENVIR_DE;
-	protected ApplicationContext appCtx;
+	//protected ApplicationContext appCtx;
 	
 	public EnvironType getEnvType() {
 		return envType;
@@ -24,9 +24,10 @@ public class EnvirContext implements ApplicationContextAware{
 	}
 
 	public void setApplicationContext(ApplicationContext ctx)throws BeansException {
-		this.appCtx = ctx;
+		//this.appCtx = ctx;
 	}
 
+	/*
 	public Set getResourcePaths(String resstr) {
 		Set rs = null;
 		
@@ -54,6 +55,6 @@ public class EnvirContext implements ApplicationContextAware{
 		
 		return rs;
 	}
-	
+	*/
 	
 }

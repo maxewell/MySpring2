@@ -113,6 +113,10 @@ public class ConstantKey {
 	/*********************** AP ****************************/
 	public static final String ATTR_SESSION_USER_MENU = "___USER__MENU";
     	
+	/* --------------------------  Intercepter ------------------- */
+	public static final String ENV_RUNTIME_ATTR ="___ENV__RUNTIME";
+	public static final String REQUEST_OBJ_ATTR = "___REQUEST__OBJ";
+	public static final String SPRING_CONTEXT_ATTR = "___SPRING__CONTEXT_OBJ"; 
 	
 	/* ********************** EdpFtpRunnableImpl- ********************* */
 	public static String FTP_RUN_METHOD_GET = "get";

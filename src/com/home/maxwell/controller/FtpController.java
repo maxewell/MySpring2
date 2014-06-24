@@ -18,21 +18,36 @@ public class FtpController extends ApctlController{
 	}
 	
 	public ModelAndView onFtpSend(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception, FtpServiceException {
-		String remoteDir = ServletRequestUtils.getRequiredStringParameter(request, "remoteDir");
-		String remoteFile = ServletRequestUtils.getRequiredStringParameter(request, "remoteFile");
-		String localFile = ServletRequestUtils.getRequiredStringParameter(request, "localFile");
+		//String remoteDir = ServletRequestUtils.getRequiredStringParameter(request, "remoteDir");
+		//String remoteFile = ServletRequestUtils.getRequiredStringParameter(request, "remoteFile");
+		//String localFile = ServletRequestUtils.getRequiredStringParameter(request, "localFile");
+		//ftpService.sendFile(remoteDir, remoteFile, localFile, true);
 		
-		ftpService.sendFile(remoteDir, remoteFile, localFile, true);
+		String[] remoteDirs = new String[]{null, "daynet2bli"};
+		String[] remoteFiles = new String[]{"FtpTestOK.zip", "20130401_POK.txt"};
+		String[] localFiles = new String[]{"F:/FtpTestOK.zip", "F:/20130401_POK.txt"};
+		ftpService.sendFile(remoteDirs, remoteFiles, localFiles);
 		
 		return new ModelAndView("ftpForm");
 	}
 	
 	public ModelAndView onFtpGet(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception, FtpServiceException {
+		/*
 		String remoteDir = ServletRequestUtils.getRequiredStringParameter(request, "remoteDir");
 		String remoteFile = ServletRequestUtils.getRequiredStringParameter(request, "remoteFile");
 		String localFile = ServletRequestUtils.getRequiredStringParameter(request, "localFile");
+		remoteDir = null;
+		remoteFile = "FtpTest.zip";
+		localFile="F:/FtpTestOk.zip";
+		ftpService.getFile(remoteDir, remoteFile, localFile, false);
+		*/
 		
-		ftpService.getFile(remoteDir, remoteFile, localFile, true);
+		
+		String[] remoteDirs = new String[]{null, "daynet2bli"};
+		String[] remoteFiles = new String[]{"FtpTest.zip", "20130401_P.txt"};
+		String[] localFiles = new String[]{"F:/FtpTestOK.zip", "F:/20130401_POK.txt"};
+		ftpService.getFile(remoteDirs, remoteFiles, localFiles);
+		
 		
 		return new ModelAndView("ftpForm");
 	}

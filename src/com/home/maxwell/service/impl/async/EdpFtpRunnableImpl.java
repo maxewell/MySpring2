@@ -3,20 +3,14 @@ package com.home.maxwell.service.impl.async;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.enterprisedt.net.ftp.FTPConnectMode;
-import com.enterprisedt.net.ftp.FTPTransferType;
-import com.enterprisedt.net.ftp.FileTransferClient;
 import com.home.maxwell.ConstantKey;
-import com.home.maxwell.exception.FtpServiceException;
 import com.home.maxwell.service.FtpService;
 
 public class EdpFtpRunnableImpl extends AbstractRunnableImpl{
-
+	protected static Logger logger = LoggerFactory.getLogger(EdpFtpRunnableImpl.class);
 	protected boolean active = false;
 	
-	protected static Logger logger = LoggerFactory.getLogger(EdpFtpRunnableImpl.class);
 	protected FtpService ftpService;   
-	protected EdpFtpListener ftpListener;
 	
 	public void doAsync() throws Throwable{
 		String method = (String)this.dataMap.get(ConstantKey.FTP_RUN_METHOD);
@@ -34,7 +28,6 @@ public class EdpFtpRunnableImpl extends AbstractRunnableImpl{
 		}
 	}
 	
-	
 	public FtpService getFtpService() {
 		return this.ftpService;
 	}
@@ -50,5 +43,5 @@ public class EdpFtpRunnableImpl extends AbstractRunnableImpl{
 	public void setActive(boolean active) {
 		this.active = active;
 	}
-	
+		
 }

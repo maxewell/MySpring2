@@ -14,5 +14,4 @@ public interface ITxCallable extends Callable<Boolean>, Comparable{
 	void setEnQTime(Date date);
 	void setName(String name);
 	
-	
 }

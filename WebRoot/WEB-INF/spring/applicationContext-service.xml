@@ -8,16 +8,6 @@
 			http://www.springframework.org/schema/aop 
 			http://www.springframework.org/schema/aop/spring-aop.xsd">
 
-    <!-- 
-	<bean id="ftpServer1" class="com.home.maxwell.service.FtpService">
-		<property name="env" ref="ftpServer1Env" />
-	</bean>
-			
-    <bean id="ftpServer2" class="com.home.maxwell.service.FtpService">
-		<property name="env" ref="ftpServer2Env" />
-	</bean>	
-	 -->
-	 
 	<bean id="systemService" class="com.home.maxwell.service.impl.SystemServiceImpl">
 	   <property name="appEnvDao" ref="appEnvDao"/>   
 	</bean>		
@@ -35,9 +25,12 @@
 	<bean id="asyncFtpService" scope="prototype" class="com.home.maxwell.service.impl.async.EdpFtpRunnableImpl">
 	   <property name="ftpService" ref="ftpService" />
 	</bean>
-	
+	 
 	<bean id="ftpService" class="com.home.maxwell.service.impl.EdpFtpServiceImpl">
 	   <property name="ftpClient" ref="ftpClient" />
+	   <!-- 
+	   <property name="listener" ref="ftpListener" />
+	    -->
 	</bean>
 	
 	<bean id="ftpClient" class="com.enterprisedt.net.ftp.FileTransferClient" >
@@ -45,6 +38,8 @@
 	   <property name="userName" value="${vsftp.username}"/>
 	   <property name="password" value="${vsftp.passwd}"/>
 	</bean>
+	
+	<bean id="ftpListener" class="com.home.maxwell.service.impl.EdpFtpListener" />
 	
 	<bean id="mailService" class="com.home.maxwell.service.impl.SpringMailServiceImpl" >
 	   <property name="mailSender" ref="mailSender" />

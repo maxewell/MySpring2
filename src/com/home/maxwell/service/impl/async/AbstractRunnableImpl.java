@@ -85,4 +85,5 @@ public abstract class AbstractRunnableImpl implements ITxCallable{
 	public void setAsyncStatus(AsyncStatus status){
 		this.status = status;
 	}
+	
 }
