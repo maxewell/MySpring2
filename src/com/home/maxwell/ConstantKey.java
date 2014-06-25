@@ -116,7 +116,12 @@ public class ConstantKey {
 	/* --------------------------  Intercepter ------------------- */
 	public static final String ENV_RUNTIME_ATTR ="___ENV__RUNTIME";
 	public static final String REQUEST_OBJ_ATTR = "___REQUEST__OBJ";
-	public static final String SPRING_CONTEXT_ATTR = "___SPRING__CONTEXT_OBJ"; 
+	public static final String SPRING_CONTEXT_ATTR = "___SPRING__CONTEXT_OBJ";
+	
+	/* --------------------- AYNC_STATUS -------------------------- */
+	public static final int ASYNC_STATUS_NEW = 0;   //
+	public static final int ASYNC_STATUS_ENQ = 1;   //進Queue中
+	public static final int ASYNC_STATUS_DEQ = 2;   //出Queue,進行執行
 	
 	/* ********************** EdpFtpRunnableImpl- ********************* */
 	public static String FTP_RUN_METHOD_GET = "get";

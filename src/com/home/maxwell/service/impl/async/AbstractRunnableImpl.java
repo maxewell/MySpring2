@@ -1,13 +1,14 @@
 package com.home.maxwell.service.impl.async;
 
-import java.util.Date;
+
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-import com.home.maxwell.exception.FtpServiceException;
+import com.home.maxwell.ConstantKey;
+import com.home.maxwell.dao.AsyncStatusDao;
 import com.home.maxwell.service.AsyncStatus;
 import com.home.maxwell.service.ITxCallable;
 
@@ -15,28 +16,50 @@ public abstract class AbstractRunnableImpl implements ITxCallable{
 	protected static Logger logger = LoggerFactory.getLogger(AbstractRunnableImpl.class);
 	protected int priority;
 	protected String name;
-	protected AsyncStatus status;
+	protected AsyncStatus status; 
 
 	protected Map<String, Object> dataMap;
 
-	protected Date deQTime;
-	protected Date enQTime;
+	protected long deQTime;
+	protected long enQTime;
+	
+	protected AsyncStatusDao asyncStatusDao;
 	
 	public Boolean call(){
 		try {
-			this.updateTxAsyncStatus("Running");
+			this.updateTxAsyncStatusStart();
 			doAsync();
-			this.updateTxAsyncStatus("True");
+			this.updateTxAsyncStatusSuccess();
 		}catch(Throwable e){
-			//TODO: LOG Exception
+			logger.error(e.getMessage(), e);
 		
-			this.updateTxAsyncStatus("False");
+			this.updateTxAsyncStatusFail();
 			return Boolean.FALSE;
 		}
 		
 		return Boolean.TRUE;
 	}
 	
+	private void updateTxAsyncStatusFail() {
+		updateTxAsyncStatus("Successed");
+		this.status.setEndTime(System.currentTimeMillis());
+		this.status.setProgress(0);
+		asyncStatusDao.update(this.status);
+	}
+
+	private void updateTxAsyncStatusSuccess() {
+		updateTxAsyncStatus("Successed");
+		this.status.setEndTime(System.currentTimeMillis());
+		this.status.setProgress(100);
+		asyncStatusDao.update(this.status);
+	}
+
+	private void updateTxAsyncStatusStart() {
+		updateTxAsyncStatus("Running");
+		this.status.setStartTime(System.currentTimeMillis());
+		asyncStatusDao.update(this.status);
+	}
+
 	public abstract void doAsync() throws Throwable;
 
 	protected void updateTxAsyncStatus(String state){
@@ -54,12 +77,23 @@ public abstract class AbstractRunnableImpl implements ITxCallable{
 		this.dataMap = map;
 	}
 
-	public void setDeQTime(Date date) {
+	public void setDeQTime(long date) {
 		this.deQTime = date;
+		this.status.setStatus(ConstantKey.ASYNC_STATUS_DEQ);
 	}
 
-	public void setEnQTime(Date date) {
+	public void setEnQTime(long date) {
 		this.enQTime = date;
+		this.status.setStatus(ConstantKey.ASYNC_STATUS_ENQ);
+		this.asyncStatusDao.insert(this.status);
+		
+	}
+	public long getDeQTime() {
+		return this.deQTime;
+	}
+
+	public long getEnQTime() {
+		return this.enQTime;
 	}
 	
 	public int getPriority() {

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -26,64 +27,51 @@ public class AsyncServiceImpl extends Thread implements AsyncService{
 		threadPoolService = Executors.newFixedThreadPool(5);
 	}
 	
-	public AsyncStatus asyncRun(String name, final Runnable r) {
+	public AsyncStatus asyncRun(String txname, final Runnable r, String userId) {
+		//new一個ITxCallable的Anonymous物件instance,將Runable的run()包起來
 		ITxCallable able = new AbstractRunnableImpl(){
 			public void doAsync(){
 				r.run();
 			}
-			/*
-			public Boolean call(){
-				try {
-					this.updateTxAsyncStatus("Running");
-					r.run();
-					this.updateTxAsyncStatus("True");
-				}catch(Exception e){
-					//TODO: LOG Exception
-				
-					this.updateTxAsyncStatus("False");
-					return Boolean.FALSE;
-				}
-				
-				return Boolean.TRUE;
-			}
-			*/
 		};
-		able.setName(name);
+		able.setName(txname);
 		
-		AsyncStatus status = getTxAsyncStatus(able, name);
+		AsyncStatus status = getTxAsyncStatus(able, txname, userId);
 		this.statusList.add(status);
 		
 		bpQueue.push(able);
+		able.setEnQTime(System.currentTimeMillis());
 		
 		return status;
 	}
 
-	public AsyncStatus asyncRun(String name, ITxCallable r) {
+	public AsyncStatus asyncRun(String txname, ITxCallable r, String userId) {
 		
-		r.setName(name);
+		r.setName(txname);
 		
-		AsyncStatus status = getTxAsyncStatus(r, name);
+		AsyncStatus status = getTxAsyncStatus(r, txname, userId);
 		this.statusList.add(status);
 		
 		bpQueue.push(r);
+		r.setEnQTime(System.currentTimeMillis());
 		
 		return status;
 	}
 
-	private AsyncStatus getTxAsyncStatus(ITxCallable able, String name){
+	private AsyncStatus getTxAsyncStatus(ITxCallable able, String txname, String userId){
 		AsyncStatus status = new AsyncStatusImpl();
 		
 		String txId = getTxId();
 		status.setTxId(txId);
-		status.setName(name);
+		status.setName(txname);
+		status.setUserId(userId);
 		able.setAsyncStatus(status);
 		
 		return status;
 	}
 	
 	private String getTxId() {
-		//TODO: 
-		return "TXID";
+		return UUID.randomUUID().toString();
 	}
 
 	public void run() {
@@ -92,7 +80,7 @@ public class AsyncServiceImpl extends Thread implements AsyncService{
 			ITxCallable able;
 			try {
 				able = (ITxCallable)bpQueue.pop();
-				able.setDeQTime(new Date());
+				able.setDeQTime(System.currentTimeMillis());
 				Future<Boolean> future = this.submit(able);
 				AsyncStatusImpl status = (AsyncStatusImpl)able.getAsyncStatus();
 				status.setFuture(future);
@@ -112,7 +100,7 @@ public class AsyncServiceImpl extends Thread implements AsyncService{
 		return null;
 	}
 
-	public List<AsyncStatus> queryAsyncTxStatusList(UserInfo user, String name) {
+	public List<AsyncStatus> queryAsyncTxStatusList(String user, String name) {
 		// TODO Auto-generated method stub
 		return null;
 	}

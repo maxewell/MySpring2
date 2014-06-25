@@ -38,14 +38,14 @@ public class MockController  extends ApctlController{
 		map.put("UNO", uno);
 		
 		//if sync
-		mockFacade.doMockSomething(empid);
+		//mockFacade.doMockSomething(empid);
 		
 		//if async
 		asyncService.asyncRun("xx", new Runnable(){
 			public void run(){
 				mockFacade.doMockSomething(empid);
 			}
-		});
+		}, "A123456789");
 		
 		//schedule
 		//若這樣寫，當schedule設為100分鐘後，則empid等memory是否還在是個問題。
@@ -71,7 +71,7 @@ public class MockController  extends ApctlController{
 				//System.out.println("T:" + Thread.currentThread().getName());
 				mockFacade.doMockSomething(data);
 			}
-		});
+		}, "A123456789");
 		
 		return new ModelAndView("welcome"); 
 	}

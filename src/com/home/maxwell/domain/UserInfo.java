@@ -1,5 +1,5 @@
 package com.home.maxwell.domain;
 
-public class UserInfo {
-
+public interface UserInfo {
+	public String getId();
 }

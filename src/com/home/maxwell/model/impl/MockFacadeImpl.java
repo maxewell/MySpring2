@@ -27,11 +27,25 @@ public class MockFacadeImpl implements MockFacade{
 			logger.info("MockFacadeImple: doMockNothing: " + data + "||" + Thread.currentThread().getName());
 		}	
 		
+		
+	}
+
+	public void doLongTimeMockSomething(String data) {
+		int time = 20000;
+		if (logger.isInfoEnabled()){
+			logger.info("MockFacadeImple: doLongTimeMockSomething[Sleep: " + time + " sec]: " + data + "||" + Thread.currentThread().getName());
+		}	
+		try {
+			Thread.sleep(time);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		//simulate throw exception
-		/*
-		int a=1, b=0;
-		a = 100 / b;
-		*/
+				/*
+				int a=1, b=0;
+				a = 100 / b;
+				*/
 	}
 
 }

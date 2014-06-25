@@ -10,8 +10,10 @@ public interface ITxCallable extends Callable<Boolean>, Comparable{
 	//void setITxPriorityRunnableBook(ITxPriorityRunnableBook book);
 	void setRunData(Map<String, Object> map);
 	
-	void setDeQTime(Date date);
-	void setEnQTime(Date date);
+	void setDeQTime(long date);
+	long getDeQTime();
+	void setEnQTime(long date);
+	long getEnQTime();
 	void setName(String name);
 	
 }

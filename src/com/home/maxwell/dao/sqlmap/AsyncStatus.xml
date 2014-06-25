@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="ASYNCSTATUS">
+    
+    <resultMap id="AsyncStatus" class="com.home.maxwell.service.impl.async.AsyncStatusImpl"> 
+        <result property="txId" column="ID" /> 
+        <result property="name" column="TXNAME" /> 
+        <result property="startTime" column="STARTTIME" />
+        <result property="endTime" column="ENDTIME" /> 
+        <result property="status" column="STATUS" />
+        <result property="result" column="RESULT" />
+        <result property="progress" column="PROGRESS" />
+    </resultMap> 
+
+    <insert id="insert">
+        insert into ASYNCSTATUS (ID, TXNAME, STATUS) values (#txId#, #name#, #status#)
+    </insert> 
+    
+    <update id="update">
+        update ASYNCSTATUS 
+        SET STARTTIME = #startTime#
+        SET ENDTIME = #endTime#
+        SET STATUS = #status#
+        SET RESULT = #result#
+        SET PROGRESS = #progress#
+        WHERE ID = #txId#
+    </update>
+    <!-- 
+    <select id="getAppEnvValues" parameterClass="java.lang.String" resultClass="com.home.maxwell.domain.AppEnv">
+        SELECT 
+        APPNAME as appName, 
+        ENVKEY as envKey,  
+        ENVVALUE as envValue
+        FROM APPENV
+        WHERE
+            APPNAME = #value:varchar#
+    </select>
+     --> 
+</sqlMap>

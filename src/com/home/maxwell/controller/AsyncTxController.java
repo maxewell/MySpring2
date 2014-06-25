@@ -3,8 +3,6 @@ package com.home.maxwell.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,9 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.ServletRequestUtils;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.util.WebUtils;
 
 import com.home.maxwell.ConstantKey;
 import com.home.maxwell.domain.FtpJob;
@@ -32,17 +29,35 @@ public class AsyncTxController extends ApctlController{
 	protected String name;
 	protected AsyncService asyncService;
 	protected MockFacade mockFacade;
-
+	
+	protected String showName;
+	protected String resultName;
+	
+	public ModelAndView onShowForm(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletRequestBindingException{
+		return new ModelAndView(this.showName);
+	}
+	
 	//沒有寫好的Runnable
+	//1. new一個anonymous Runnable物件,將要做的工作與data至於其中run method()
+	//2. 呼叫ansyncService.asyncRun(name, r)
 	public ModelAndView onRunAsyncTx(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletRequestBindingException{
 		final String data = ServletRequestUtils.getRequiredStringParameter(request, "data");
+		
+		//假設userId可由Session.userId取得
+		//UserInfo user = (UserInfo)WebUtils.getSessionAttribute(request, "userId");
+		//String userId = user.getId();
+		String userId = "A123456789";
 		
 		Runnable r = new Runnable(){
 			public void run(){
 				//try {
 					//Exception 還是要Throw出來，由asyncService那邊去catch,
 				    //可以?
-					mockFacade.doMockNothing(data);
+				    //結論: 在此不用try-catch,讓它throw 出去
+				    //理由: 在asyncService中會用一個ITxCallable物件instance將此runnable包裝起來wrap
+				    //     此ITxCallable的呼叫過程有try-catch機制
+				
+					mockFacade.doLongTimeMockSomething(data);
 				/*
 				}catch(Exception e){					
 				}finally{					
@@ -52,10 +67,11 @@ public class AsyncTxController extends ApctlController{
 		};
 		
 		AsyncStatus status = null;
-		status = asyncService.asyncRun(name, r);
+		status = asyncService.asyncRun(name, r, userId);
 		session.setAttribute("___ASYNC__SERVICE_STATUS", status);
 		
 		//try to get the result or forward to query action
+		/*
 		try {
 			int rs = status.getResult(2000);
 			logger.info("RS:" + rs);
@@ -63,12 +79,23 @@ public class AsyncTxController extends ApctlController{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		*/
 		
-		return null;
+		return new ModelAndView(this.resultName);
 	}
 	
 	//使用已寫好的Runnable
+	//已寫好的Async Service用法
+	//1. 利用ThreadLocalHelper.getBean()取得Service instance(此instance為prototype,非singleton)
+	//2. 利用setRunData(),帶入Service須用的參數
+	//3. 呼叫此asyncService的asyncRun(name, r)
 	public ModelAndView onRunAsyncTxService(HttpServletRequest request, HttpServletResponse response, HttpSession session, FtpJob job) throws ServletRequestBindingException{
+		
+		//假設userId可由Session.userId取得
+		//UserInfo user = (UserInfo)WebUtils.getSessionAttribute(request, "userId");
+		//String userId = user.getId();
+		String userId = "A123456789";
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put(ConstantKey.FTP_LOCAL_FILE, "F:/MyDownloads.rar");
 		map.put(ConstantKey.FTP_REMOTE_FILE, "downloads.rar");
@@ -98,7 +125,8 @@ public class AsyncTxController extends ApctlController{
 		r.setRunData(map);
 		
 		AsyncStatus status = null;
-		status = asyncService.asyncRun(name, r);
+		status = asyncService.asyncRun(name, r, userId);
+		
 		session.setAttribute("___ASYNC__SERVICE_STATUS", status);
 				
 		return null;
@@ -121,9 +149,14 @@ public ModelAndView onQueryTxProgress(HttpServletRequest request, HttpServletRes
 	/*
 	 * UserInfo: 識別某一人的資訊
 	 */
-	public ModelAndView queryAsyncTxStatusList(HttpServletRequest request, HttpServletResponse response, HttpSession session, UserInfo user){
+	public ModelAndView queryAsyncTxStatusList(HttpServletRequest request, HttpServletResponse response, HttpSession session){
+		//假設userId可由Session.userId取得
+		//UserInfo user = (UserInfo)WebUtils.getSessionAttribute(request, "userId");
+		//String userId = user.getId();
+		String userId = "A123456789";
+				
 		//使用user與此交易名去查詢此user執行此交易過的歷史記錄
-		List<AsyncStatus> list = asyncService.queryAsyncTxStatusList(user, name);
+		List<AsyncStatus> list = asyncService.queryAsyncTxStatusList(userId, name);
 		return null;
 	}
 	
@@ -149,6 +182,22 @@ public ModelAndView onQueryTxProgress(HttpServletRequest request, HttpServletRes
 
 	public void setMockFacade(MockFacade mockFacade) {
 		this.mockFacade = mockFacade;
+	}
+
+	public String getShowName() {
+		return showName;
+	}
+
+	public void setShowName(String showName) {
+		this.showName = showName;
+	}
+
+	public String getResultName() {
+		return resultName;
+	}
+
+	public void setResultName(String resultName) {
+		this.resultName = resultName;
 	}
 
 }
