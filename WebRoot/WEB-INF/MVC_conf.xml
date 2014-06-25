@@ -66,8 +66,8 @@
         <property name="name" value="ASYNCRUN1" />
         <property name="asyncService" ref="asyncService" />
         <property name="mockFacade" ref="mockFacade" />
-        <porperty name="showName" value="asyncshow" />
-        <porperty name="resultName" value="asyncresult" />
+        <property name="showName" value="asyncshow" />
+        <property name="resultName" value="asyncresult" />
     </bean>
 	<bean id="customerController" parent="abstractSpringController"
 		class="com.home.maxwell.controller.CustomerController">
