@@ -129,7 +129,7 @@ public class AsyncTxController extends ApctlController{
 		
 		session.setAttribute("___ASYNC__SERVICE_STATUS", status);
 				
-		return null;
+		return new ModelAndView(this.resultName);
 	}
 	
 	//wish to query the 某一TxStatus進度
