@@ -23,6 +23,8 @@ public abstract class AbstractRunnableImpl implements ITxCallable{
 	protected long deQTime;
 	protected long enQTime;
 	
+	//一個要執行的作業,是否應該還要負責status的DB寫入?不是Async服務嗎?服務要像樣的
+	//statusDao放在此,有點突兀
 	protected AsyncStatusDao asyncStatusDao;
 
 	public Boolean call(){
