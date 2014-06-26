@@ -122,6 +122,8 @@ public class ConstantKey {
 	public static final int ASYNC_STATUS_NEW = 0;   //
 	public static final int ASYNC_STATUS_ENQ = 1;   //進Queue中
 	public static final int ASYNC_STATUS_DEQ = 2;   //出Queue,進行執行
+	public static final int ASYNC_STATUS_START = 3; //開始執行
+	public static final int ASYNC_STATUS_DONE = 4;  //執行結束
 	
 	/* ********************** EdpFtpRunnableImpl- ********************* */
 	public static String FTP_RUN_METHOD_GET = "get";

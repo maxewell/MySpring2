@@ -28,8 +28,7 @@ public abstract class AbstractRunnableImpl implements ITxCallable{
 	public Boolean call(){
 		try {
 			this.updateTxAsyncStatusStart();
-			doAsync();
-		
+			doAsync();	
 			this.updateTxAsyncStatusSuccess();
 		}catch(Throwable e){
 			logger.error(e.getMessage(), e);
@@ -44,6 +43,7 @@ public abstract class AbstractRunnableImpl implements ITxCallable{
 	private void updateTxAsyncStatusFail(String msg) {
 		updateTxAsyncStatus("Failed");
 		this.status.setEndTime(System.currentTimeMillis());
+		this.status.setStatus(ConstantKey.ASYNC_STATUS_DONE);
 		this.status.setProgress(-1);
 		this.status.setMessage(msg);
 		this.status.setResult(-1);
@@ -53,6 +53,7 @@ public abstract class AbstractRunnableImpl implements ITxCallable{
 	private void updateTxAsyncStatusSuccess() {
 		updateTxAsyncStatus("Successed");
 		this.status.setEndTime(System.currentTimeMillis());
+		this.status.setStatus(ConstantKey.ASYNC_STATUS_DONE);
 		this.status.setProgress(100);
 		this.status.setMessage("OK");
 		this.status.setResult(1);
@@ -62,6 +63,7 @@ public abstract class AbstractRunnableImpl implements ITxCallable{
 	private void updateTxAsyncStatusStart() {
 		updateTxAsyncStatus("Running");
 		this.status.setStartTime(System.currentTimeMillis());
+		this.status.setStatus(ConstantKey.ASYNC_STATUS_START);
 		asyncStatusDao.update(this.status);
 	}
 

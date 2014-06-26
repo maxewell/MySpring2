@@ -17,6 +17,7 @@ import org.springframework.web.util.WebUtils;
 
 import com.home.maxwell.ConstantKey;
 import com.home.maxwell.domain.FtpJob;
+import com.home.maxwell.domain.TxStatus;
 import com.home.maxwell.domain.UserInfo;
 import com.home.maxwell.helper.ThreadLocalHelper;
 import com.home.maxwell.model.MockFacade;
@@ -156,7 +157,7 @@ public ModelAndView onQueryTxProgress(HttpServletRequest request, HttpServletRes
 		String userId = "A123456789";
 				
 		//使用user與此交易名去查詢此user執行此交易過的歷史記錄
-		List<AsyncStatus> list = asyncService.queryAsyncTxStatusList(userId, name);
+		List<TxStatus> list = asyncService.queryAsyncTxStatusList(userId, name);
 		return null;
 	}
 	

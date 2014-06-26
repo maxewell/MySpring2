@@ -3,15 +3,15 @@ package com.home.maxwell.domain;
 import com.home.maxwell.ConstantKey;
 
 public class TxStatus {
-	protected String txId;
-	protected String name;
-	protected String userId;
-	protected long startTime;
+	protected String txId;				//TxID
+	protected String name;				//Tx name
+	protected String userId;			//呼叫執行Tx的人
+	protected long startTime;			//
 	protected long endTime;
-	protected int status = ConstantKey.ASYNC_STATUS_NEW;      //0:init, 1:EnQueue 2:DeQueue
+	protected int status = ConstantKey.ASYNC_STATUS_NEW;      //0:init, 1:EnQueue, 2:DeQueue(submit/running), 3:done
 	protected int progress;
 	protected String message;
-	protected int result;
+	protected int result;				//執行結果: //0: running, 1:success, -1:failure
 
 	public String getTxId() {
 		return txId;
