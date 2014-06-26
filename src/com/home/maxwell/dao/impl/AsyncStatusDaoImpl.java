@@ -8,11 +8,11 @@ import com.home.maxwell.service.AsyncStatus;
 public class AsyncStatusDaoImpl extends SqlMapClientDaoSupport implements AsyncStatusDao{
 
 	public void update(AsyncStatus status) {
-		getSqlMapClientTemplate().update("");
+		getSqlMapClientTemplate().update("ASYNCSTATUS.update", status);
 	}
 
 	public void insert(AsyncStatus status) {
-		getSqlMapClientTemplate().insert("ASYNCSTATUS.insert");
+		getSqlMapClientTemplate().insert("ASYNCSTATUS.insert", status);
 	}
 
 }

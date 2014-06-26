@@ -4,21 +4,30 @@
 <body>
     <h1>My Spring MVC Async Service example</h1>
     <hr/>
-    <h2> Send File</h2>
+    <h2> Query Async Status </h2>
     <form action="asyncTx/QueryTxProgress.so" method="post">
-        <table>
+        <table border="1">
             <thead>
-                <tr><th>JobName</th></tr>
-                <tr><th>JobTime(begin)</th></tr>
-                <tr><th>JobTime(end)</th></tr>
-                <tr><th>JobTime(Result)</th></tr>
+                <tr width="100%">
+                    <th width="10%">TxName</th>
+                    <th width="10%">TxTime(begin)</th>
+                    <th width="10%">TxTime(end)</th>
+                    <th width="10%">Status</th>
+                    <th width="10%">Result</th>
+                </tr>
             </thead>
             <tbody>
-                <tr><td></td></tr>
-                <tr><td></td></tr>
+                <tr>
+                    <td>${___ASYNC__SERVICE_STATUS.name }</td>
+                    <td>${___ASYNC__SERVICE_STATUS.startTime }</td>
+                    <td>${___ASYNC__SERVICE_STATUS.endTime }</td>
+                    <td>${___ASYNC__SERVICE_STATUS.status }</td>
+                    <td>${___ASYNC__SERVICE_STATUS.txResult }</td>
+                </tr>
+                
             </tbody>
         </table>
-        <input type="submit" value="Send" />
+        <input type="submit" value="Query" />
     </form>
     <hr/>
 </body>

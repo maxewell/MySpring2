@@ -1,7 +1,5 @@
 package com.home.maxwell.service;
 
-import java.util.concurrent.ExecutionException;
-
 public interface AsyncStatus {
 
 	public void setTxId(String txId);
@@ -17,9 +15,13 @@ public interface AsyncStatus {
 	public void setStatus(int status);
 	public int getStatus();
 	public boolean isDone();
-	public int getResult(long timeout) throws Exception;
-	public int getResult() throws Exception;
-	public int waitResult() throws Exception;
+	public int getTxResult(long timeout) throws Exception;
+	public int getTxResult() throws Exception;
+	public int waitTxResult() throws Exception;
 	public void setProgress(int val);
 	public int getProgress();
+	public void setMessage(String msg);
+	public String getMessage();
+	public void setResult(int rs);
+	public int getResult();
 }

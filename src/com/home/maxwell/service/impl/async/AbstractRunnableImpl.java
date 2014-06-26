@@ -24,26 +24,29 @@ public abstract class AbstractRunnableImpl implements ITxCallable{
 	protected long enQTime;
 	
 	protected AsyncStatusDao asyncStatusDao;
-	
+
 	public Boolean call(){
 		try {
 			this.updateTxAsyncStatusStart();
 			doAsync();
+		
 			this.updateTxAsyncStatusSuccess();
 		}catch(Throwable e){
 			logger.error(e.getMessage(), e);
 		
-			this.updateTxAsyncStatusFail();
+			this.updateTxAsyncStatusFail(e.getMessage());
 			return Boolean.FALSE;
 		}
 		
 		return Boolean.TRUE;
 	}
 	
-	private void updateTxAsyncStatusFail() {
-		updateTxAsyncStatus("Successed");
+	private void updateTxAsyncStatusFail(String msg) {
+		updateTxAsyncStatus("Failed");
 		this.status.setEndTime(System.currentTimeMillis());
-		this.status.setProgress(0);
+		this.status.setProgress(-1);
+		this.status.setMessage(msg);
+		this.status.setResult(-1);
 		asyncStatusDao.update(this.status);
 	}
 
@@ -51,6 +54,8 @@ public abstract class AbstractRunnableImpl implements ITxCallable{
 		updateTxAsyncStatus("Successed");
 		this.status.setEndTime(System.currentTimeMillis());
 		this.status.setProgress(100);
+		this.status.setMessage("OK");
+		this.status.setResult(1);
 		asyncStatusDao.update(this.status);
 	}
 
@@ -80,6 +85,7 @@ public abstract class AbstractRunnableImpl implements ITxCallable{
 	public void setDeQTime(long date) {
 		this.deQTime = date;
 		this.status.setStatus(ConstantKey.ASYNC_STATUS_DEQ);
+		this.asyncStatusDao.update(this.status);
 	}
 
 	public void setEnQTime(long date) {
@@ -120,4 +126,11 @@ public abstract class AbstractRunnableImpl implements ITxCallable{
 		this.status = status;
 	}
 	
+	public AsyncStatusDao getAsyncStatusDao() {
+		return asyncStatusDao;
+	}
+
+	public void setAsyncStatusDao(AsyncStatusDao asyncStatusDao) {
+		this.asyncStatusDao = asyncStatusDao;
+	}
 }

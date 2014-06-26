@@ -8,4 +8,5 @@
 	<sqlMap resource="com/home/maxwell/dao/sqlmap/Dept.xml" />
 	<sqlMap resource="com/home/maxwell/dao/sqlmap/Emp.xml" />
 	<sqlMap resource="com/home/maxwell/dao/sqlmap/AppEnv.xml" />
+	<sqlMap resource="com/home/maxwell/dao/sqlmap/AsyncStatus.xml" />
 </sqlMapConfig>

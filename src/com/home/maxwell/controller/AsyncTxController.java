@@ -97,8 +97,8 @@ public class AsyncTxController extends ApctlController{
 		String userId = "A123456789";
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put(ConstantKey.FTP_LOCAL_FILE, "F:/MyDownloads.rar");
-		map.put(ConstantKey.FTP_REMOTE_FILE, "downloads.rar");
+		map.put(ConstantKey.FTP_LOCAL_FILE, "F:/MyFtp.rar");
+		map.put(ConstantKey.FTP_REMOTE_FILE, "FtpTest.rar");
 		map.put(ConstantKey.FTP_RUN_METHOD, "get");
 		map.put(ConstantKey.FTP_TYPE_IS_ASCII, Boolean.FALSE);
 		
@@ -139,10 +139,10 @@ public class AsyncTxController extends ApctlController{
 public ModelAndView onQueryTxProgress(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception{
 		AsyncStatus status = (AsyncStatus)session.getAttribute("___ASYNC__SERVICE_STATUS");
 		//ITxRunnable內有status reference,會直接更新status的值,不需再去作其他動作
-		logger.info("RS status:" + status.getResult(2000));
-		session.removeAttribute("___ASYNC__SERVICE_STATUS");
+		logger.info("RS status:" + status.getTxResult(2000));
+		//session.removeAttribute("___ASYNC__SERVICE_STATUS");
 		
-		return null;
+		return new ModelAndView(this.resultName);
 	}
 	
 	//wish to query 某人執行此AsyncTx的所以執行結果

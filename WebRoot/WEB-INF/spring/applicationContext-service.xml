@@ -24,13 +24,12 @@
 	
 	<bean id="asyncFtpService" scope="prototype" class="com.home.maxwell.service.impl.async.EdpFtpRunnableImpl">
 	   <property name="ftpService" ref="ftpService" />
+	   <property name="asyncStatusDao" ref="asyncStatusDao" />
 	</bean>
 	 
 	<bean id="ftpService" class="com.home.maxwell.service.impl.EdpFtpServiceImpl">
 	   <property name="ftpClient" ref="ftpClient" />
-	   <!-- 
 	   <property name="listener" ref="ftpListener" />
-	    -->
 	</bean>
 	
 	<bean id="ftpClient" class="com.enterprisedt.net.ftp.FileTransferClient" >

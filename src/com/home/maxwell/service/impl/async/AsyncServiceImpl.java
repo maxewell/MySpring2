@@ -10,7 +10,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import com.home.maxwell.dao.AsyncStatusDao;
 import com.home.maxwell.domain.UserInfo;
+import com.home.maxwell.helper.ThreadLocalHelper;
 import com.home.maxwell.service.AsyncService;
 import com.home.maxwell.service.AsyncStatus;
 import com.home.maxwell.service.ITxCallable;
@@ -35,7 +37,9 @@ public class AsyncServiceImpl extends Thread implements AsyncService{
 			}
 		};
 		able.setName(txname);
-		
+		AsyncStatusDao dao = (AsyncStatusDao)ThreadLocalHelper.getBean("asyncStatusDao");
+		able.setAsyncStatusDao(dao);
+				
 		AsyncStatus status = getTxAsyncStatus(able, txname, userId);
 		this.statusList.add(status);
 		

@@ -5,57 +5,13 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-import com.home.maxwell.ConstantKey;
+import com.home.maxwell.domain.TxStatus;
 import com.home.maxwell.service.AsyncStatus;
 
-public class AsyncStatusImpl implements AsyncStatus{
-	protected String txId;
-	protected String name;
-	protected String userId;
-	protected long startTime;
-	protected long endTime;
-	protected int status = ConstantKey.ASYNC_STATUS_NEW;      //0:init, 1:EnQueue 2:DeQueue
+public class AsyncStatusImpl extends TxStatus implements AsyncStatus{
 	protected Future<Boolean> future;       //virtual property: result-> result: 0:Running, 1:Sucess, -1:Fail, 99: wait to run 
-	protected int progress;
-
-	public String getUserId() {
-		return userId;
-	}
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-	public void setTxId(String txId) {
-		this.txId = txId;
-	}
-	public String getTxId(){
-		return this.txId;
-	}
 	
-	public void setName(String name){
-		this.name = name;
-	}
-	
-	public String getName(){
-		return this.name;
-	}
-	public long getStartTime() {
-		return startTime;
-	}
-	public void setStartTime(long startTime) {
-		this.startTime = startTime;
-	}
-	public long getEndTime() {
-		return endTime;
-	}
-	public void setEndTime(long endTime) {
-		this.endTime = endTime;
-	}
-	public int getStatus() {
-		return status;
-	}
-	public void setStatus(int status) {
-		this.status = status;
-	}
+		
 	public Future<Boolean> getFuture() {
 		return future;
 	}
@@ -74,7 +30,7 @@ public class AsyncStatusImpl implements AsyncStatus{
 	}
 	
 	//result: 0:Running, 1:Sucess, -1:Fail, 99: wait to running
-	public int getResult(long timeout) throws InterruptedException, ExecutionException{
+	public int getTxResult(long timeout) throws InterruptedException, ExecutionException{
 		if (this.future == null) {
 			return 99;
 		}
@@ -95,7 +51,7 @@ public class AsyncStatusImpl implements AsyncStatus{
 	}
 
 	//result: 0:Running, 1:Sucess, -1:Fail, 99: wait to running
-	public int getResult() throws Exception {
+	public int getTxResult() throws Exception {
 		if (this.future == null) {
 			return 99;
 		}
@@ -110,7 +66,7 @@ public class AsyncStatusImpl implements AsyncStatus{
 	}
 
 	//result: 0:Running, 1:Sucess, -1:Fail, 99: wait to running
-	public int waitResult() throws Exception {
+	public int waitTxResult() throws Exception {
 		if (this.future == null) {
 			return 99;
 		}
@@ -123,12 +79,4 @@ public class AsyncStatusImpl implements AsyncStatus{
 		
 	}
 	
-
-	public int getProgress() {
-		return progress;
-	}
-
-	public void setProgress(int progress) {
-		this.progress = progress;
-	}
 }

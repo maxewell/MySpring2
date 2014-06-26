@@ -3,29 +3,34 @@
 
 <sqlMap namespace="ASYNCSTATUS">
     
-    <resultMap id="AsyncStatus" class="com.home.maxwell.service.impl.async.AsyncStatusImpl"> 
+    <resultMap id="AsyncStatus" class="com.home.maxwell.domain.TxStatus"> 
         <result property="txId" column="ID" /> 
         <result property="name" column="TXNAME" /> 
+        <result property="userId" column="USERID" />
         <result property="startTime" column="STARTTIME" />
         <result property="endTime" column="ENDTIME" /> 
         <result property="status" column="STATUS" />
-        <result property="result" column="RESULT" />
         <result property="progress" column="PROGRESS" />
+        <result property="result" column="RESULT" />
+        <result property="message" column="MESSAGE" />
     </resultMap> 
 
     <insert id="insert">
-        insert into ASYNCSTATUS (ID, TXNAME, STATUS) values (#txId#, #name#, #status#)
+        insert into ASYNCSTATUS (ID, TXNAME, USERID, STATUS) values (#txId#, #name#, #userId#, #status#)
     </insert> 
     
     <update id="update">
         update ASYNCSTATUS 
-        SET STARTTIME = #startTime#
-        SET ENDTIME = #endTime#
-        SET STATUS = #status#
-        SET RESULT = #result#
-        SET PROGRESS = #progress#
+        SET 
+        STARTTIME = #startTime#,
+        ENDTIME = #endTime#,
+        STATUS = #status#,
+        RESULT = #result#,
+        PROGRESS = #progress#,
+        MESSAGE = #message#
         WHERE ID = #txId#
     </update>
+    
     <!-- 
     <select id="getAppEnvValues" parameterClass="java.lang.String" resultClass="com.home.maxwell.domain.AppEnv">
         SELECT 

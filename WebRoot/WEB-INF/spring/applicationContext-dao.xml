@@ -20,4 +20,8 @@
     <bean id="appEnvDao" class="com.home.maxwell.dao.impl.AppEnvDaoImpl">
         <property name="sqlMapClient" ref="sqlMapClient" />
     </bean>
+    
+    <bean id="asyncStatusDao" class="com.home.maxwell.dao.impl.AsyncStatusDaoImpl">
+        <property name="sqlMapClient" ref="sqlMapClient" />
+    </bean>
 </beans>    
