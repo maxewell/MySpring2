@@ -10,6 +10,7 @@ import com.enterprisedt.net.ftp.FTPConnectMode;
 import com.enterprisedt.net.ftp.FTPTransferType;
 import com.enterprisedt.net.ftp.FileTransferClient;
 import com.home.maxwell.exception.FtpServiceException;
+import com.home.maxwell.service.AsyncStatus;
 import com.home.maxwell.service.FtpEventListener;
 import com.home.maxwell.service.FtpService;
 
@@ -204,6 +205,12 @@ public class EdpFtpServiceImpl implements FtpService{
 
 	public void setListener(FtpEventListener listener) {
 		this.listener = listener;
+	}
+
+	public void setAsyncStatus(AsyncStatus status) {
+		if (this.listener != null){
+			this.listener.setAsyncStatus(status);
+		}
 	}
 
 }

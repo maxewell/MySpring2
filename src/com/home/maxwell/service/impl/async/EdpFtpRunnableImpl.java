@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.home.maxwell.ConstantKey;
+import com.home.maxwell.service.AsyncStatus;
 import com.home.maxwell.service.FtpService;
 
 public class EdpFtpRunnableImpl extends AbstractRunnableImpl{
@@ -44,4 +45,10 @@ public class EdpFtpRunnableImpl extends AbstractRunnableImpl{
 		this.active = active;
 	}
 		
+	public void setAsyncStatus(AsyncStatus status){
+		super.setAsyncStatus(status);
+		if (this.ftpService != null){
+			this.ftpService.setAsyncStatus(status);
+		}
+	}
 }

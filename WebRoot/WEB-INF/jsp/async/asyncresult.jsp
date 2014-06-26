@@ -13,6 +13,7 @@
                     <th width="10%">TxTime(begin)</th>
                     <th width="10%">TxTime(end)</th>
                     <th width="10%">Status</th>
+                    <th width="10%">Progress</th>
                     <th width="10%">Result</th>
                 </tr>
             </thead>
@@ -22,6 +23,7 @@
                     <td>${___ASYNC__SERVICE_STATUS.startTime }</td>
                     <td>${___ASYNC__SERVICE_STATUS.endTime }</td>
                     <td>${___ASYNC__SERVICE_STATUS.status }</td>
+                    <td>${___ASYNC__SERVICE_STATUS.progress }</td>
                     <td>${___ASYNC__SERVICE_STATUS.txResult }</td>
                 </tr>
                 

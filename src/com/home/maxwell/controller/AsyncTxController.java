@@ -97,8 +97,8 @@ public class AsyncTxController extends ApctlController{
 		String userId = "A123456789";
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put(ConstantKey.FTP_LOCAL_FILE, "F:/MyFtp.rar");
-		map.put(ConstantKey.FTP_REMOTE_FILE, "FtpTest.rar");
+		map.put(ConstantKey.FTP_LOCAL_FILE, "F:/MyFtp.zip");
+		map.put(ConstantKey.FTP_REMOTE_FILE, "FtpTest.zip");
 		map.put(ConstantKey.FTP_RUN_METHOD, "get");
 		map.put(ConstantKey.FTP_TYPE_IS_ASCII, Boolean.FALSE);
 		

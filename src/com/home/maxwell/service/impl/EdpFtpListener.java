@@ -128,4 +128,8 @@ public class EdpFtpListener implements FtpEventListener{
 		this.jobIndex = jobIndex;
 	}
 
+	public void setAsyncStatus(AsyncStatus status) {
+		this.status = status;
+	}
+
 }
