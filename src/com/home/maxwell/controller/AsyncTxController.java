@@ -33,6 +33,7 @@ public class AsyncTxController extends ApctlController{
 	
 	protected String showName;
 	protected String resultName;
+	protected String resultListName;
 	
 	public ModelAndView onShowForm(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletRequestBindingException{
 		return new ModelAndView(this.showName);
@@ -150,15 +151,16 @@ public ModelAndView onQueryTxProgress(HttpServletRequest request, HttpServletRes
 	/*
 	 * UserInfo: 識別某一人的資訊
 	 */
-	public ModelAndView queryAsyncTxStatusList(HttpServletRequest request, HttpServletResponse response, HttpSession session){
+	public ModelAndView onQueryTxStatusList(HttpServletRequest request, HttpServletResponse response, HttpSession session){
 		//假設userId可由Session.userId取得
 		//UserInfo user = (UserInfo)WebUtils.getSessionAttribute(request, "userId");
 		//String userId = user.getId();
 		String userId = "A123456789";
 				
 		//使用user與此交易名去查詢此user執行此交易過的歷史記錄
-		List<TxStatus> list = asyncService.queryAsyncTxStatusList(userId, name);
-		return null;
+		List<TxStatus> list = asyncService.queryTxStatusList(userId, name);
+		
+		return new ModelAndView(this.resultListName, "___ASYNC__TX_LIST", list);
 	}
 	
 	public String getName() {
@@ -200,5 +202,14 @@ public ModelAndView onQueryTxProgress(HttpServletRequest request, HttpServletRes
 	public void setResultName(String resultName) {
 		this.resultName = resultName;
 	}
+	
+	public String getResultListName() {
+		return resultListName;
+	}
+
+	public void setResultListName(String resultListName) {
+		this.resultListName = resultListName;
+	}
+
 
 }

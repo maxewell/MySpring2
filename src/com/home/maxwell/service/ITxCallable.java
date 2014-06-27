@@ -18,6 +18,8 @@ public interface ITxCallable extends Callable<Boolean>, Comparable{
 	//輔助記錄用
 	void setAsyncStatus(AsyncStatus status);
 	AsyncStatus getAsyncStatus();
+	/*
 	AsyncStatusDao getAsyncStatusDao();
 	void setAsyncStatusDao(AsyncStatusDao asyncStatusDao);
+	*/
 }

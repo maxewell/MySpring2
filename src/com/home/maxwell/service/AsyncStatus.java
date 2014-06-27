@@ -24,4 +24,6 @@ public interface AsyncStatus {
 	public String getMessage();
 	public void setResult(int rs);
 	public int getResult();
+	public void setAsyncStatusListener(AsyncStatusListener listener);
+	public void refreshStatus();
 }

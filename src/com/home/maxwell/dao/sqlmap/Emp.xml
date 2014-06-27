@@ -35,6 +35,6 @@
         SELECT EMPID, NAME, DEPT, SAL as SALARY
         FROM EMP
         WHERE 
-            EMPID = #value:varchar#
+            EMPID = #value:VARCHAR#
     </select>
 </sqlMap>

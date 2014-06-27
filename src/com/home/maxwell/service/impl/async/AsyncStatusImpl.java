@@ -7,11 +7,18 @@ import java.util.concurrent.TimeoutException;
 
 import com.home.maxwell.domain.TxStatus;
 import com.home.maxwell.service.AsyncStatus;
+import com.home.maxwell.service.AsyncStatusListener;
 
 public class AsyncStatusImpl extends TxStatus implements AsyncStatus{
 	protected Future<Boolean> future;       //virtual property: result-> result: 0:Running, 1:Sucess, -1:Fail, 99: wait to run 
-	
+	protected AsyncStatusListener listener;
 		
+	public void refreshStatus() {
+		if (listener != null){
+			listener.statusChanged(this);
+		}
+	}
+	
 	public Future<Boolean> getFuture() {
 		return future;
 	}
@@ -78,5 +85,11 @@ public class AsyncStatusImpl extends TxStatus implements AsyncStatus{
 		}
 		
 	}
+
+	public void setAsyncStatusListener(AsyncStatusListener listener) {
+		this.listener = listener;
+	}
+
+
 	
 }

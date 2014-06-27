@@ -31,15 +31,23 @@
         WHERE ID = #txId#
     </update>
     
-    <!-- 
-    <select id="getAppEnvValues" parameterClass="java.lang.String" resultClass="com.home.maxwell.domain.AppEnv">
-        SELECT 
-        APPNAME as appName, 
-        ENVKEY as envKey,  
-        ENVVALUE as envValue
-        FROM APPENV
+    <select id="queryTxStatusList" resultMap="AsyncStatus">
+        SELECT  
+        ID, 
+        TXNAME,  
+        USERID,
+        STARTTIME,
+        ENDTIME,
+        STATUS,
+        PROGRESS,
+        RESULT,
+        MESSAGE
+        FROM ASYNCSTATUS
         WHERE
-            APPNAME = #value:varchar#
+            USERID = #userId:VARCHAR#
+            AND
+            TXNAME = #txName:VARCHAR#
+        ORDER BY STARTTIME DESC 
     </select>
-     --> 
+     
 </sqlMap>

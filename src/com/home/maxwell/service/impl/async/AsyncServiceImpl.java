@@ -17,6 +17,8 @@ import com.home.maxwell.domain.UserInfo;
 import com.home.maxwell.helper.ThreadLocalHelper;
 import com.home.maxwell.service.AsyncService;
 import com.home.maxwell.service.AsyncStatus;
+import com.home.maxwell.service.AsyncStatusListener;
+import com.home.maxwell.service.AsyncStatusMan;
 import com.home.maxwell.service.ITxCallable;
 import com.home.maxwell.service.impl.async.AbstractRunnableImpl;
 import com.home.maxwell.service.impl.async.BlockPriorityQueue;
@@ -26,14 +28,16 @@ public class AsyncServiceImpl extends Thread implements AsyncService{
 	protected BlockPriorityQueue<Callable<Boolean>> bpQueue;
 	
 	//How to monitor the status in the statusList and update the status to DB
-	protected List<AsyncStatus> statusList;
-	
+	//protected List<AsyncStatus> statusList;
+	protected AsyncStatusMan asyncStatusMan;
+
 	//use to start thread to run;
 	protected ExecutorService threadPoolService;
 	
 	public AsyncServiceImpl(){
 		//statusList must be Thread-Safe
-		statusList = Collections.synchronizedList(new ArrayList<AsyncStatus>());
+		//statusList = Collections.synchronizedList(new ArrayList<AsyncStatus>());
+				
 		threadPoolService = Executors.newFixedThreadPool(5);
 	}
 	
@@ -45,11 +49,14 @@ public class AsyncServiceImpl extends Thread implements AsyncService{
 			}
 		};
 		able.setName(txname);
+		/*
 		AsyncStatusDao dao = (AsyncStatusDao)ThreadLocalHelper.getBean("asyncStatusDao");
 		able.setAsyncStatusDao(dao);
-				
+		*/
+		
 		AsyncStatus status = getTxAsyncStatus(able, txname, userId);
-		this.statusList.add(status);
+		//this.statusList.add(status);
+		this.asyncStatusMan.addAsyncStatus(status);
 		
 		bpQueue.push(able);
 		able.setEnQTime(System.currentTimeMillis());
@@ -62,7 +69,8 @@ public class AsyncServiceImpl extends Thread implements AsyncService{
 		r.setName(txname);
 		
 		AsyncStatus status = getTxAsyncStatus(r, txname, userId);
-		this.statusList.add(status);
+		//this.statusList.add(status);
+		this.asyncStatusMan.addAsyncStatus(status);
 		
 		bpQueue.push(r);
 		r.setEnQTime(System.currentTimeMillis());
@@ -77,6 +85,8 @@ public class AsyncServiceImpl extends Thread implements AsyncService{
 		status.setTxId(txId);
 		status.setName(txname);
 		status.setUserId(userId);
+		status.setAsyncStatusListener((AsyncStatusListener)this.asyncStatusMan);
+		
 		able.setAsyncStatus(status);
 		
 		return status;
@@ -115,9 +125,8 @@ public class AsyncServiceImpl extends Thread implements AsyncService{
 		return null;
 	}
 
-	public List<TxStatus> queryAsyncTxStatusList(String user, String txname) {
-		//statusList.getAsyncStatus(userId, txName);
-		return null;
+	public List<TxStatus> queryTxStatusList(String userid, String txname) {
+		return this.asyncStatusMan.queryTxStatusList(userid, txname);
 	}
 	
 	public BlockPriorityQueue<Callable<Boolean>> getBpQueue() {
@@ -126,5 +135,13 @@ public class AsyncServiceImpl extends Thread implements AsyncService{
 
 	public void setBpQueue(BlockPriorityQueue<Callable<Boolean>> bpQueue) {
 		this.bpQueue = bpQueue;
+	}
+	
+	public AsyncStatusMan getAsyncStatusMan() {
+		return asyncStatusMan;
+	}
+
+	public void setAsyncStatusMan(AsyncStatusMan asyncStatusMan) {
+		this.asyncStatusMan = asyncStatusMan;
 	}
 }

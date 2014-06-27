@@ -14,6 +14,11 @@
 	
 	<bean id="asyncService" class="com.home.maxwell.service.impl.async.AsyncServiceImpl" init-method="start">
 	   <property name="bpQueue" ref="blockPriorityQueue" />
+	   <property name="asyncStatusMan" ref="asyncStatusMan" />
+	</bean>
+	
+	<bean id="asyncStatusMan" class="com.home.maxwell.service.impl.async.AsyncStatusManImpl">
+	   <property name="asyncStatusDao" ref="asyncStatusDao" />
 	</bean>
 	
 	<bean id="blockPriorityQueue" class="com.home.maxwell.service.impl.async.BlockPriorityQueue">
@@ -24,7 +29,6 @@
 	
 	<bean id="asyncFtpService" scope="prototype" class="com.home.maxwell.service.impl.async.EdpFtpRunnableImpl">
 	   <property name="ftpService" ref="ftpService" />
-	   <property name="asyncStatusDao" ref="asyncStatusDao" />
 	</bean>
 	 
 	<bean id="ftpService" class="com.home.maxwell.service.impl.EdpFtpServiceImpl">

@@ -25,7 +25,7 @@ public abstract class AbstractRunnableImpl implements ITxCallable{
 	
 	//一個要執行的作業,是否應該還要負責status的DB寫入?不是Async服務嗎?服務要像樣的
 	//statusDao放在此,有點突兀
-	protected AsyncStatusDao asyncStatusDao;
+	//protected AsyncStatusDao asyncStatusDao;
 
 	public Boolean call(){
 		try {
@@ -49,7 +49,9 @@ public abstract class AbstractRunnableImpl implements ITxCallable{
 		this.status.setProgress(-1);
 		this.status.setMessage(msg);
 		this.status.setResult(-1);
-		asyncStatusDao.update(this.status);
+		
+		//asyncStatusDao.update(this.status);
+		status.refreshStatus();
 	}
 
 	private void updateTxAsyncStatusSuccess() {
@@ -59,14 +61,18 @@ public abstract class AbstractRunnableImpl implements ITxCallable{
 		this.status.setProgress(100);
 		this.status.setMessage("OK");
 		this.status.setResult(1);
-		asyncStatusDao.update(this.status);
+		
+		//asyncStatusDao.update(this.status);
+		status.refreshStatus();
 	}
 
 	private void updateTxAsyncStatusStart() {
 		updateTxAsyncStatus("Running");
 		this.status.setStartTime(System.currentTimeMillis());
 		this.status.setStatus(ConstantKey.ASYNC_STATUS_START);
-		asyncStatusDao.update(this.status);
+		
+		//asyncStatusDao.update(this.status);
+		status.refreshStatus();
 	}
 
 	public abstract void doAsync() throws Throwable;
@@ -89,14 +95,17 @@ public abstract class AbstractRunnableImpl implements ITxCallable{
 	public void setDeQTime(long date) {
 		this.deQTime = date;
 		this.status.setStatus(ConstantKey.ASYNC_STATUS_DEQ);
-		this.asyncStatusDao.update(this.status);
+		
+		//this.asyncStatusDao.update(this.status);
+		status.refreshStatus();
 	}
 
 	public void setEnQTime(long date) {
 		this.enQTime = date;
 		this.status.setStatus(ConstantKey.ASYNC_STATUS_ENQ);
-		this.asyncStatusDao.insert(this.status);
 		
+		//this.asyncStatusDao.insert(this.status);
+		status.refreshStatus();
 	}
 	public long getDeQTime() {
 		return this.deQTime;
@@ -130,6 +139,7 @@ public abstract class AbstractRunnableImpl implements ITxCallable{
 		this.status = status;
 	}
 	
+	/*
 	public AsyncStatusDao getAsyncStatusDao() {
 		return asyncStatusDao;
 	}
@@ -137,4 +147,5 @@ public abstract class AbstractRunnableImpl implements ITxCallable{
 	public void setAsyncStatusDao(AsyncStatusDao asyncStatusDao) {
 		this.asyncStatusDao = asyncStatusDao;
 	}
+	*/
 }
