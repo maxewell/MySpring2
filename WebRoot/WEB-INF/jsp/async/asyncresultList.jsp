@@ -1,6 +1,14 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
+<head>
+    <script type="text/javascript">
+        $(document).ready(function (){
+            alert("Hello");
+            
+        });
+    </script>
+</head>
 <body>
     <h1>My Spring MVC Async Service example</h1>
     <hr/>
@@ -16,6 +24,7 @@
                     <th width="10%">Status</th>
                     <th width="10%">Progress</th>
                     <th width="10%">Result</th>
+                    <th width="10%">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -28,11 +37,11 @@
                     <td>${item.status }</td>
                     <td>${item.progress }</td>
                     <td>${item.result }</td>
+                    <td><input id="qrybtn-${status.count}" index="${status.count}" type="button" value="查詢"></input></td>
                 </tr>
                 </c:forEach>
             </tbody>
         </table>
-        <input type="submit" value="Query" />
     </form>
     <hr/>
 </body>
