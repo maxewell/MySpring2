@@ -34,6 +34,7 @@ public class ApctlController extends MultiActionController{
 			mv = super.handleRequestInternal(request, response);
 			
 		} catch (ApctlException t){
+			t.printStackTrace();
 			BindException bex = new BindException(t.getCommand(), t.getCommandName());
 			ObjectError err = new ObjectError(t.getCommandName(), new String[]{t.getApctlErrCodeEnum().toString()}, 
 					(t.getParamList() != null) ? t.getParamList().toArray() : null, t.getMessage());
@@ -47,7 +48,7 @@ public class ApctlController extends MultiActionController{
 			return new ModelAndView(t.getViewName(), bex.getModel());
 			
 		} catch (Throwable t){
-			//TODO: 
+			t.printStackTrace();
 		}
 		
 		//清除ThreadLocal中Http等Session資料

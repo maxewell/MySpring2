@@ -12,7 +12,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import com.home.maxwell.dao.AsyncStatusDao;
-import com.home.maxwell.domain.TxStatus;
+import com.home.maxwell.domain.TxStatusImpl;
 import com.home.maxwell.domain.UserInfo;
 import com.home.maxwell.helper.ThreadLocalHelper;
 import com.home.maxwell.service.AsyncService;
@@ -20,6 +20,7 @@ import com.home.maxwell.service.AsyncStatus;
 import com.home.maxwell.service.AsyncStatusListener;
 import com.home.maxwell.service.AsyncStatusMan;
 import com.home.maxwell.service.ITxCallable;
+import com.home.maxwell.service.TxStatus;
 import com.home.maxwell.service.impl.async.AbstractRunnableImpl;
 import com.home.maxwell.service.impl.async.BlockPriorityQueue;
 
@@ -83,7 +84,7 @@ public class AsyncServiceImpl extends Thread implements AsyncService{
 		
 		String txId = getTxId();
 		status.setTxId(txId);
-		status.setName(txname);
+		status.setTxName(txname);
 		status.setUserId(userId);
 		status.setAsyncStatusListener((AsyncStatusListener)this.asyncStatusMan);
 		
@@ -129,6 +130,10 @@ public class AsyncServiceImpl extends Thread implements AsyncService{
 		return this.asyncStatusMan.queryTxStatusList(userid, txname);
 	}
 	
+	public TxStatus queryTxStatus(String userId, String txname, String statusId) {
+		return this.asyncStatusMan.queryTxStatus(userId, txname, statusId);
+	}
+	
 	public BlockPriorityQueue<Callable<Boolean>> getBpQueue() {
 		return bpQueue;
 	}
@@ -144,4 +149,6 @@ public class AsyncServiceImpl extends Thread implements AsyncService{
 	public void setAsyncStatusMan(AsyncStatusMan asyncStatusMan) {
 		this.asyncStatusMan = asyncStatusMan;
 	}
+
+	
 }

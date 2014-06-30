@@ -3,9 +3,9 @@
 
 <sqlMap namespace="ASYNCSTATUS">
     
-    <resultMap id="AsyncStatus" class="com.home.maxwell.domain.TxStatus"> 
-        <result property="txId" column="ID" /> 
-        <result property="name" column="TXNAME" /> 
+    <resultMap id="AsyncStatus" class="com.home.maxwell.domain.TxStatusImpl"> 
+        <result property="txId" column="TXID" /> 
+        <result property="txName" column="TXNAME" /> 
         <result property="userId" column="USERID" />
         <result property="startTime" column="STARTTIME" />
         <result property="endTime" column="ENDTIME" /> 
@@ -16,7 +16,7 @@
     </resultMap> 
 
     <insert id="insert">
-        insert into ASYNCSTATUS (ID, TXNAME, USERID, STATUS) values (#txId#, #name#, #userId#, #status#)
+        insert into ASYNCSTATUS (TXID, TXNAME, USERID, STATUS) values (#txId#, #txName#, #userId#, #status#)
     </insert> 
     
     <update id="update">
@@ -28,12 +28,12 @@
         RESULT = #result#,
         PROGRESS = #progress#,
         MESSAGE = #message#
-        WHERE ID = #txId#
+        WHERE TXID = #txId#
     </update>
     
     <select id="queryTxStatusList" resultMap="AsyncStatus">
         SELECT  
-        ID, 
+        TXID, 
         TXNAME,  
         USERID,
         STARTTIME,
@@ -48,6 +48,27 @@
             AND
             TXNAME = #txName:VARCHAR#
         ORDER BY STARTTIME DESC 
+    </select>
+    
+    <select id="queryTxStatus" resultClass="com.home.maxwell.domain.TxStatusImpl">
+        SELECT  
+        TXID, 
+        TXNAME,  
+        USERID,
+        STARTTIME,
+        ENDTIME,
+        STATUS,
+        PROGRESS,
+        RESULT,
+        MESSAGE
+        FROM ASYNCSTATUS
+        WHERE
+            USERID = #userId:VARCHAR#
+            AND
+            TXNAME = #txName:VARCHAR#
+            AND
+            TXID = #statusId:VARCHAR#
+         
     </select>
      
 </sqlMap>

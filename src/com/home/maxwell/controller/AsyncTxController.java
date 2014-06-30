@@ -17,13 +17,15 @@ import org.springframework.web.util.WebUtils;
 
 import com.home.maxwell.ConstantKey;
 import com.home.maxwell.domain.FtpJob;
-import com.home.maxwell.domain.TxStatus;
+import com.home.maxwell.domain.TxStatusImpl;
 import com.home.maxwell.domain.UserInfo;
+import com.home.maxwell.helper.SessionHelper;
 import com.home.maxwell.helper.ThreadLocalHelper;
 import com.home.maxwell.model.MockFacade;
 import com.home.maxwell.service.AsyncService;
 import com.home.maxwell.service.AsyncStatus;
 import com.home.maxwell.service.ITxCallable;
+import com.home.maxwell.service.TxStatus;
 
 public class AsyncTxController extends ApctlController{
 	protected static Logger logger = LoggerFactory.getLogger(AsyncTxController.class);
@@ -34,7 +36,9 @@ public class AsyncTxController extends ApctlController{
 	protected String showName;
 	protected String resultName;
 	protected String resultListName;
-	
+	protected String statusResult;
+	protected String statusRefresh;
+
 	public ModelAndView onShowForm(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletRequestBindingException{
 		return new ModelAndView(this.showName);
 	}
@@ -70,18 +74,9 @@ public class AsyncTxController extends ApctlController{
 		
 		AsyncStatus status = null;
 		status = asyncService.asyncRun(name, r, userId);
-		session.setAttribute("___ASYNC__SERVICE_STATUS", status);
 		
-		//try to get the result or forward to query action
-		/*
-		try {
-			int rs = status.getResult(2000);
-			logger.info("RS:" + rs);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		*/
+		session.setAttribute("___ASYNC__SERVICE_STATUS", status);
+		SessionHelper.addStatusList(session, status);
 		
 		return new ModelAndView(this.resultName);
 	}
@@ -130,6 +125,7 @@ public class AsyncTxController extends ApctlController{
 		status = asyncService.asyncRun(name, r, userId);
 		
 		session.setAttribute("___ASYNC__SERVICE_STATUS", status);
+		SessionHelper.addStatusList(session, status);
 				
 		return new ModelAndView(this.resultName);
 	}
@@ -138,8 +134,38 @@ public class AsyncTxController extends ApctlController{
 	/*
 	 * AysncStatus: 某一AsyncTx回應的status
 	 */
-public ModelAndView onQueryTxProgress(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception{
+	public ModelAndView onQueryTxProgress(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception{
+		//假設userId可由Session.userId取得
+		//UserInfo user = (UserInfo)WebUtils.getSessionAttribute(request, "userId");
+		//String userId = user.getId();
+		String userId = "A123456789";
+				
+		String statusId = ServletRequestUtils.getRequiredStringParameter(request, "asyncStatusId");
+																				   
+		AsyncStatus status = SessionHelper.getAsyncStatus(session, statusId);
+		TxStatus astatus;
+		
+		if (status == null){
+			astatus = asyncService.queryTxStatus(userId, this.name, statusId);
+		}else{
+			astatus = status;
+		}
+		
+		if (request.getHeader("Ajax") != null){
+			return new ModelAndView(this.statusRefresh, "__ASYNC_STATUS_OBJ", astatus);
+		}else{
+			return new ModelAndView(this.statusResult, "__ASYNC_STATUS_OBJ", astatus);
+		}	
+		//ITxRunnable內有status reference,會直接更新status的值,不需再去作其他動作
+		//logger.info("RS status:" + status.getTxResult(2000));
+		//session.removeAttribute("___ASYNC__SERVICE_STATUS");
+		
+		//return new ModelAndView(this.resultName);
+	}
+	
+	public ModelAndView onQuerySessionTxProgress(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception{
 		AsyncStatus status = (AsyncStatus)session.getAttribute("___ASYNC__SERVICE_STATUS");
+				
 		//ITxRunnable內有status reference,會直接更新status的值,不需再去作其他動作
 		logger.info("RS status:" + status.getTxResult(2000));
 		//session.removeAttribute("___ASYNC__SERVICE_STATUS");
@@ -211,5 +237,20 @@ public ModelAndView onQueryTxProgress(HttpServletRequest request, HttpServletRes
 		this.resultListName = resultListName;
 	}
 
+	public String getStatusResult() {
+		return statusResult;
+	}
+
+	public void setStatusResult(String statusResult) {
+		this.statusResult = statusResult;
+	}
+	
+	public String getStatusRefresh() {
+		return statusRefresh;
+	}
+
+	public void setStatusRefresh(String statusRefresh) {
+		this.statusRefresh = statusRefresh;
+	}
 
 }

@@ -12,6 +12,8 @@
          -->
     </excludes>
 
+    <decorator name="dashboard" page="/WEB-INF/jsp/async/statusresult.jsp" />
+    
 	<!-- 創建一個名為main的裝飾器，該裝飾器頁面為main.jsp,
 	     用於裝飾pattern指定的URL的所有頁面-->
     <decorator name="main" page="Base.jsp">

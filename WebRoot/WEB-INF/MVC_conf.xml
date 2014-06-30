@@ -69,6 +69,8 @@
         <property name="showName" value="asyncshow" />
         <property name="resultName" value="asyncresult" />
         <property name="resultListName" value="resultListName" />
+        <property name="statusResult" value="statusResult" />
+        <property name="statusRefresh" value="statusRefresh" />
     </bean>
 	<bean id="customerController" parent="abstractSpringController"
 		class="com.home.maxwell.controller.CustomerController">

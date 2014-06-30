@@ -5,11 +5,11 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-import com.home.maxwell.domain.TxStatus;
+import com.home.maxwell.domain.TxStatusImpl;
 import com.home.maxwell.service.AsyncStatus;
 import com.home.maxwell.service.AsyncStatusListener;
 
-public class AsyncStatusImpl extends TxStatus implements AsyncStatus{
+public class AsyncStatusImpl extends TxStatusImpl implements AsyncStatus{
 	protected Future<Boolean> future;       //virtual property: result-> result: 0:Running, 1:Sucess, -1:Fail, 99: wait to run 
 	protected AsyncStatusListener listener;
 		

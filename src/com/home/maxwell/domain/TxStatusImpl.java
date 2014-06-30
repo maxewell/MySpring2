@@ -1,10 +1,11 @@
 package com.home.maxwell.domain;
 
 import com.home.maxwell.ConstantKey;
+import com.home.maxwell.service.TxStatus;
 
-public class TxStatus {
+public class TxStatusImpl implements TxStatus{
 	protected String txId;				//TxID
-	protected String name;				//Tx name
+	protected String txName;				//Tx name
 	protected String userId;			//呼叫執行Tx的人
 	protected long startTime;			//
 	protected long endTime;
@@ -19,11 +20,11 @@ public class TxStatus {
 	public void setTxId(String txId) {
 		this.txId = txId;
 	}
-	public String getName() {
-		return name;
+	public String getTxName() {
+		return txName;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setTxName(String name) {
+		this.txName = name;
 	}
 	public String getUserId() {
 		return userId;

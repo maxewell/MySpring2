@@ -9,10 +9,11 @@ import org.slf4j.LoggerFactory;
 
 import com.home.maxwell.ConstantKey;
 import com.home.maxwell.dao.AsyncStatusDao;
-import com.home.maxwell.domain.TxStatus;
+import com.home.maxwell.domain.TxStatusImpl;
 import com.home.maxwell.service.AsyncStatus;
 import com.home.maxwell.service.AsyncStatusListener;
 import com.home.maxwell.service.AsyncStatusMan;
+import com.home.maxwell.service.TxStatus;
 
 public class AsyncStatusManImpl implements AsyncStatusMan, AsyncStatusListener{
 	protected static Logger logger = LoggerFactory.getLogger(AsyncStatusManImpl.class);
@@ -42,6 +43,10 @@ public class AsyncStatusManImpl implements AsyncStatusMan, AsyncStatusListener{
 
 	public List<TxStatus> queryTxStatusList(String userId, String txName) {
 		return this.asyncStatusDao.queryTxStatusList(userId, txName);
+	}
+
+	public TxStatus queryTxStatus(String userId, String txName, String statusId) {
+		return this.asyncStatusDao.queryTxStatus(userId, txName, statusId);
 	}
 
 }

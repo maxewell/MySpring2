@@ -7,8 +7,9 @@ import java.util.Map;
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
 import com.home.maxwell.dao.AsyncStatusDao;
-import com.home.maxwell.domain.TxStatus;
+import com.home.maxwell.domain.TxStatusImpl;
 import com.home.maxwell.service.AsyncStatus;
+import com.home.maxwell.service.TxStatus;
 
 public class AsyncStatusDaoImpl extends SqlMapClientDaoSupport implements AsyncStatusDao{
 
@@ -26,6 +27,14 @@ public class AsyncStatusDaoImpl extends SqlMapClientDaoSupport implements AsyncS
 		map.put("txName", txName);
 		
 		return getSqlMapClientTemplate().queryForList("ASYNCSTATUS.queryTxStatusList", map);
+	}
+
+	public TxStatus queryTxStatus(String userId, String txName, String statusId) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("userId", userId);
+		map.put("txName", txName);
+		map.put("statusId", statusId);
+		return (TxStatus)getSqlMapClientTemplate().queryForObject("ASYNCSTATUS.queryTxStatus", map);
 	}
 
 }

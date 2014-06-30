@@ -4,8 +4,16 @@
 <head>
     <script type="text/javascript">
         $(document).ready(function (){
-            alert("Hello");
-            
+            $("#statusIdList :button").each(function(index){
+                $(this).click(function (){
+                    var selectId = $(this).attr("statusId");
+                    $("#asyncStatusId").val(selectId);
+                    //$("#form1").submit();
+                    var url = "<c:url value='asyncTx/QueryTxProgress.so'/>" + "?asyncStatusId=" + selectId;
+                    window.open(url, "_blank", 
+                        "titlebar=no, toolbar=no, scrollbars=no, location=no, menubar=no, status=no, resizable=yes, top=300, left=300, width=600, height=400");
+                });
+            });
         });
     </script>
 </head>
@@ -13,7 +21,9 @@
     <h1>My Spring MVC Async Service example</h1>
     <hr/>
     <h2> Query Async Status List </h2>
-    <form action="asyncTx/QueryTxProgress.so" method="post">
+    <div id="statusIdList">
+    <form id="form1" action="asyncTx/QueryTxProgress.so" method="post">
+        <input type="hidden" id="asyncStatusId" name="asyncStatusId"/>
         <table border="1">
             <thead>
                 <tr width="100%">
@@ -31,18 +41,19 @@
                <c:forEach items="${___ASYNC__TX_LIST}" var="item" varStatus="status">
                 <tr>
                     <td>${status.count}</td>
-                    <td>${item.name }</td>
+                    <td>${item.txName }</td>
                     <td>${item.startTime }</td>
                     <td>${item.endTime }</td>
                     <td>${item.status }</td>
                     <td>${item.progress }</td>
                     <td>${item.result }</td>
-                    <td><input id="qrybtn-${status.count}" index="${status.count}" type="button" value="查詢"></input></td>
+                    <td><input id="qrybtn-${status.count}" statusId="${item.txId}" type="button" value="查詢"></input></td>
                 </tr>
                 </c:forEach>
             </tbody>
         </table>
     </form>
+    </div>
     <hr/>
 </body>
 </html>

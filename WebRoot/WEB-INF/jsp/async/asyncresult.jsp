@@ -19,7 +19,7 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>${___ASYNC__SERVICE_STATUS.name }</td>
+                    <td>${___ASYNC__SERVICE_STATUS.txName }</td>
                     <td>${___ASYNC__SERVICE_STATUS.startTime }</td>
                     <td>${___ASYNC__SERVICE_STATUS.endTime }</td>
                     <td>${___ASYNC__SERVICE_STATUS.status }</td>
