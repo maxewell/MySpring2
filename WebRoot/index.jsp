@@ -84,5 +84,6 @@
     <a href="<c:url value='formDemo/Show.so' />" >FormDemo</a><br/>
     <a href="<c:url value='exception/Show.so' />" >Exception</a><br/>
     <a href="<c:url value='asyncTx/ShowForm.so' />" >Async Action</a><br/>
+    <a href="<c:url value='scheduleTx/RunScheduleTx.so' />" >Schedule Action</a><br/>
   </body>
 </html>

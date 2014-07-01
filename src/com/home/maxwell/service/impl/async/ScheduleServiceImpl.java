@@ -10,13 +10,13 @@ import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.SimpleTrigger;
 import org.quartz.Trigger;
+import org.springframework.scheduling.quartz.QuartzJobBean;
 import org.springframework.util.MethodInvoker;
 
 import com.home.maxwell.service.AsyncStatus;
 import com.home.maxwell.service.ScheduleServiceNew;
 import com.home.maxwell.service.TxStatus;
 import com.home.maxwell.service.impl.BaseQuartzScheduleServiceImpl.MethodInvokingJob;
-import com.home.maxwell.service.impl.QuartzJobBean;
 
 public class ScheduleServiceImpl implements ScheduleServiceNew{
 	protected Scheduler scheduler;
@@ -43,15 +43,29 @@ public class ScheduleServiceImpl implements ScheduleServiceNew{
 		return null;
 	}
 
+	public Scheduler getScheduler() {
+		return scheduler;
+	}
+
+	public void setScheduler(Scheduler scheduler) {
+		this.scheduler = scheduler;
+	}
+	
+	/* --------------------------------------- RunInvokingJob --------------------------------- */
 	public static class RunInvokingJob extends QuartzJobBean{
 		protected Runnable runnable;
 		
 		protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
-			runnable.run();
+			try {
+				runnable.run();
+			}catch(Throwable e){
+				e.printStackTrace();
+			}
 		}
 		
 		public void setRunnable(Runnable able){
 			this.runnable = able;
 		}
 	}
+	
 }

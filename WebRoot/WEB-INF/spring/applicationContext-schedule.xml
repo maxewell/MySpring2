@@ -52,4 +52,7 @@
     </bean>
      -->
     
+    <bean id="scheduleServiceNew" class="com.home.maxwell.service.impl.async.ScheduleServiceImpl">
+        <property name="scheduler" ref="schedulerFactoryBean"/>
+    </bean>
 </beans>		

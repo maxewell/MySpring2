@@ -69,18 +69,18 @@
     <bean id="asyncshow" class="org.springframework.web.servlet.view.InternalResourceView">
         <property name="url" value="/WEB-INF/jsp/async/asyncshow.jsp"/>
     </bean>   
-    
     <bean id="asyncresult" class="org.springframework.web.servlet.view.InternalResourceView">
         <property name="url" value="/WEB-INF/jsp/async/asyncresult.jsp"/>
     </bean>   
-     
     <bean id="resultListName" class="org.springframework.web.servlet.view.InternalResourceView">
         <property name="url" value="/WEB-INF/jsp/async/asyncresultList.jsp"/>
     </bean>  
-    
     <bean id="statusResult" class="org.springframework.web.servlet.view.InternalResourceView">
         <property name="url" value="/WEB-INF/jsp/async/statusresult.jsp"/>
     </bean> 
-     
-    <bean id="statusRefresh" class="com.home.maxwell.view.AsyncStatusView"/>    
+    <bean id="statusRefresh" class="com.home.maxwell.view.AsyncStatusView"/>
+    
+    <bean id="scheduleresult" class="org.springframework.web.servlet.view.InternalResourceView">
+        <property name="url" value="/WEB-INF/jsp/schedule/scheduleresult.jsp"/>
+    </bean>    
 </beans>

@@ -62,6 +62,12 @@
 	</bean>
 
 	<!-- ************************** App Controller ********************************	-->
+    <bean id="scheduleTxController" parent="abstractSpringController" class="com.home.maxwell.controller.ScheduleTxController">
+        <property name="txName" value="SCHEDULERUN1" />
+        <property name="scheduleService" ref="scheduleServiceNew" />
+        <property name="mockFacade" ref="mockFacade" />
+        <property name="resultView" value="scheduleresult" />
+    </bean>   
     <bean id="asyncTxController" parent="abstractSpringController" class="com.home.maxwell.controller.AsyncTxController">
         <property name="name" value="ASYNCRUN1" />
         <property name="asyncService" ref="asyncService" />
