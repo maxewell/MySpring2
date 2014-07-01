@@ -6,7 +6,6 @@
     <meta name="decorator" content="dashboard">
      -->
     <link rel="stylesheet" type="text/css" href="./css/NewProgress.css"></link>
-    <script type="text/javascript" src="./js/jquery-1.5.2.js"></script>
     <script type="text/javascript" src="./js/MyNewProgress.js"></script>
     <script type="text/javascript">
         var time1;

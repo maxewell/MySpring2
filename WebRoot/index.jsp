@@ -83,8 +83,6 @@
     <hr/>
     <a href="<c:url value='formDemo/Show.so' />" >FormDemo</a><br/>
     <a href="<c:url value='exception/Show.so' />" >Exception</a><br/>
-    <a href="<c:url value='asyncTx/RunAsyncTx.so?data=Taipei' />" >Async Action1</a>
-    <a href="<c:url value='asyncTx/QueryTxStatusList.so' />" >Async Action1 Tx List Query </a>
-    <a href="<c:url value='asyncTx/RunAsyncTxService.so' />" >Async Action Service</a> 
+    <a href="<c:url value='asyncTx/ShowForm.so' />" >Async Action</a><br/>
   </body>
 </html>

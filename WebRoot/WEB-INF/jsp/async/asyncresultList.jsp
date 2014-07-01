@@ -11,7 +11,7 @@
                     //$("#form1").submit();
                     var url = "<c:url value='asyncTx/QueryTxProgress.so'/>" + "?asyncStatusId=" + selectId;
                     window.open(url, "_blank", 
-                        "titlebar=no, toolbar=no, scrollbars=no, location=no, menubar=no, status=no, resizable=yes, top=300, left=300, width=600, height=400");
+                        "titlebar=no, toolbar=no, scrollbars=no, location=no, menubar=no, status=no, resizable=yes, top=300, left=300, width=900, height=400");
                 });
             });
         });

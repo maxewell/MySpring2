@@ -6,6 +6,7 @@
     <hr/>
     <h2> Query Async Status </h2>
     <form action="asyncTx/QueryTxProgress.so" method="post">
+        <input type="hidden" name="asyncStatusId" value="${___ASYNC__SERVICE_STATUS.txId }" />
         <table border="1">
             <thead>
                 <tr width="100%">
@@ -29,7 +30,7 @@
                 
             </tbody>
         </table>
-        <input type="submit" value="Query" />
+        <input type="submit" value="繼續監控" />
     </form>
     <hr/>
 </body>

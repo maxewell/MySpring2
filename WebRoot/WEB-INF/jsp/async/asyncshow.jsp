@@ -14,5 +14,10 @@
     <form action="asyncTx/RunAsyncTxService.so" method="post">
         <input type="submit" value="Async Run Ftp Service" />
     </form>
+    <hr/>
+    <h2> Async Action Query</h2>
+    <form action="asyncTx/QueryTxStatusList.so" method="post">
+        <input type="submit" value="Query Async Status" />
+    </form>
 </body>
 </html>
