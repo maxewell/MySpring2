@@ -1,4 +1,4 @@
-package com.home.maxwell.service.impl.async;
+package com.home.maxwell.service.impl.schedule;
 
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
