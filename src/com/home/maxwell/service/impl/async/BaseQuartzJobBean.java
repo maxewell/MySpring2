@@ -6,8 +6,11 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
+import com.home.maxwell.service.ScheduleStatus;
+
 public abstract class BaseQuartzJobBean extends QuartzJobBean{
 	protected Map<String, Object> dataMap;
+	protected ScheduleStatus status;
 
 	@Override
 	protected void executeInternal(JobExecutionContext context)throws JobExecutionException {
@@ -31,5 +34,13 @@ public abstract class BaseQuartzJobBean extends QuartzJobBean{
 
 	public void setDataMap(Map<String, Object> dataMap) {
 		this.dataMap = dataMap;
+	}
+	
+	public ScheduleStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(ScheduleStatus status) {
+		this.status = status;
 	}
 }

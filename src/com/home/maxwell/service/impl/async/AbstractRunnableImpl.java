@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 
 
 import com.home.maxwell.ConstantKey;
-import com.home.maxwell.dao.AsyncStatusDao;
 import com.home.maxwell.service.AsyncStatus;
 import com.home.maxwell.service.ITxCallable;
 
