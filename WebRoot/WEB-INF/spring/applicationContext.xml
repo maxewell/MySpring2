@@ -30,32 +30,6 @@
         <property name="fallbackToSystemLocale" value="false" />
          -->
     </bean>     
-     
-    <!-- ########################## PropertyPlaceholderConfigurer ########################## -->
-    <!-- 
-    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="locations">
-            <list>
-                <value>WEB-INF/spring/env.properties</value>
-            </list>
-        </property>
-        <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_FALLBACK" />
-        <property name="location" value="classpath:env.properties" />
-        <property name="properties" ref="commonsConfigurationFactoryBean" />
-        <property name="properties" ref="runtimeFactoryBean"/> 
-    </bean>
-    -->
-    
-    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <!-- 
-        <property name="locations">
-            <list>
-                <value>WEB-INF/spring/env.properties</value>
-            </list>
-        </property>
-         --> 
-        <property name="properties" ref="rtimeDbPropertiesFactoryBean"/>  
-    </bean>
     
     <bean id="rtimeDbPropertiesFactoryBean" class="com.home.maxwell.env.RtimeDbPropertiesFactoryBean" 
              init-method="init" >
@@ -115,4 +89,37 @@
         <constructor-arg index="5" value="ApplicationOne" />
     </bean> 
      -->
+ 
+    <!-- **************** support Spring 3.1 environment Profile ******************** -->
+    <!-- ********* decide which profile by System.property: spring.profiles.active ************ -->
+    <beans profile="dev"> 
+	    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	        <property name="locations">
+	            <list>
+	                <value>WEB-INF/spring/env.properties</value>
+	            </list>
+	        </property>
+	    </bean>
+    </beans>
+    
+    <beans profile="web"> 
+        <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+            <property name="properties" ref="rtimeDbPropertiesFactoryBean"/>  
+        </bean>
+    </beans>
+     
+    <!-- ########################## PropertyPlaceholderConfigurer ########################## -->
+    <!-- 
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>WEB-INF/spring/env.properties</value>
+            </list>
+        </property>
+        <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_FALLBACK" />
+        <property name="location" value="classpath:env.properties" />
+        <property name="properties" ref="commonsConfigurationFactoryBean" />
+        <property name="properties" ref="runtimeFactoryBean"/> 
+    </bean>
+    -->     
 </beans>	
