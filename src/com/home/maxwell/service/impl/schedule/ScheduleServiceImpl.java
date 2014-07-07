@@ -32,6 +32,7 @@ public class ScheduleServiceImpl implements ScheduleServiceNew{
 	public ScheduleStatus scheduleRun(String txName, Runnable r, Date date, String userId) throws SchedulerException {
 		
 		ScheduleStatus status = getTxScheduleStatus(txName, userId);
+		status.setScheduleTime(date);
 		
 		JobDetail jobDetail = new JobDetail("jobdetail-" + txName, "group1", RunInvokingJobBean.class);
 		jobDetail.getJobDataMap().put("runnable", r);
